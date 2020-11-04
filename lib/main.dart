@@ -2,11 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-//learning flutter layouts fro this url: https://flutter.dev/docs/development/ui/layout/tutorial
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
+
+//welcome screen
+//prompt how many players
+//choose symbol
+//play game
 
 class BoxW extends StatefulWidget {
   @override
@@ -98,7 +101,7 @@ class MyApp extends StatelessWidget {
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Welcome to Flutter'),
+          title: Text('Tic Tac Toe'),
         ),
         body: Center(
           child: Grid(),
