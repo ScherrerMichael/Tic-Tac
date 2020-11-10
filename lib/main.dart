@@ -19,6 +19,8 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+//TODO somehow the Grid is messing up the animations...??
+
 class _MyAppState extends State<MyApp> {
   bool _active = false;
   bool _showMenu = true;
@@ -34,25 +36,28 @@ class _MyAppState extends State<MyApp> {
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text(_showMenu ? 'showing menu' : 'not showing menu'),
+          title: Text(_showMenu ? 'One player' : 'Two Player'),
         ),
-        body: Stack(children: [
-          Grid(
-            active: _active,
-            onChanged: _handleShowGrid,
-          ),
-          AnimatedPositioned(
-            child: Menu(
-              menuCallback: (bool value) {
-                setState(() {
-                  _showMenu = !_showMenu;
-                });
-              },
-            ),
-            duration: Duration(seconds: 5),
-            curve: Curves.bounceIn,
-          )
-        ]),
+        body: Container(
+          child: Stack(children: [
+            // Grid(
+            //   active: _active,
+            //   onChanged: _handleShowGrid,
+            // ),
+            AnimatedPositioned(
+              top: _showMenu ? 150 : 5,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInCubic,
+              child: Menu(
+                menuCallback: (bool value) {
+                  setState(() {
+                    _showMenu = !_showMenu;
+                  });
+                },
+              ),
+            )
+          ]),
+        ),
       ),
     );
   }
