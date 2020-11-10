@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInCubic,
               child: Menu(
-                menuCallback: (bool value) {
+                homeCallBack: (bool value) {
                   setState(() {
                     print("value: $value");
                     _isMultiplayer = value;

@@ -1,12 +1,17 @@
 //Welcome screen for when user started the app.
 import 'package:flutter/material.dart';
 
-typedef MenuCallBack = void Function(bool isActive);
+enum MenuScreen { playerSelect, playerNames, playGame }
+
+typedef HomeCallBack = void Function(bool isActive);
+typedef MenuCallBack = void Function(MenuScreen state);
 
 class PlayerSelectBar extends StatelessWidget {
-  const PlayerSelectBar({this.menuCallback});
+  const PlayerSelectBar(
+      {@required this.homeCallBack, @required this.menuCallBack});
 
-  final MenuCallBack menuCallback;
+  final HomeCallBack homeCallBack;
+  final MenuCallBack menuCallBack;
 
   Widget build(BuildContext buildcontext) {
     return (ButtonBar(
@@ -21,8 +26,9 @@ class PlayerSelectBar extends StatelessWidget {
           ),
           child: Text('One Player'),
           onPressed: () {
-            print('One player selected');
-            menuCallback(false);
+            print('One Player Selected');
+            homeCallBack(false);
+            menuCallBack(MenuScreen.playerNames);
           },
         ),
         SizedBox(
@@ -38,7 +44,8 @@ class PlayerSelectBar extends StatelessWidget {
           child: Text('Two Player'),
           onPressed: () {
             print('Two Player Selected');
-            menuCallback(true);
+            homeCallBack(true);
+            menuCallBack(MenuScreen.playerNames);
           },
         )
       ],
@@ -46,10 +53,23 @@ class PlayerSelectBar extends StatelessWidget {
   }
 }
 
-class Menu extends StatelessWidget {
-  const Menu({this.menuCallback});
+class Menu extends StatefulWidget {
+  final HomeCallBack homeCallBack;
+  Menu({@required this.homeCallBack});
 
-  final MenuCallBack menuCallback;
+  _MenuState createState() => _MenuState(homeCallBack: homeCallBack);
+}
+
+class _MenuState extends State<Menu> {
+  HomeCallBack homeCallBack;
+
+  _MenuState({@required this.homeCallBack}) {}
+
+  var currentScreen = MenuScreen.playerSelect;
+
+  void changeMenuScreen(MenuScreen screen) {
+    currentScreen = screen;
+  }
 
   @override
   Widget build(BuildContext buildContext) {
@@ -64,9 +84,15 @@ class Menu extends StatelessWidget {
                 SizedBox(
                   height: 150,
                 ),
-                PlayerSelectBar(
-                  menuCallback: menuCallback,
-                )
+                if (currentScreen == MenuScreen.playerSelect)
+                  PlayerSelectBar(
+                    homeCallBack: homeCallBack,
+                    menuCallBack: (MenuScreen screen) {
+                      setState(() {
+                        changeMenuScreen(screen);
+                      });
+                    },
+                  ),
               ],
             ))));
   }
