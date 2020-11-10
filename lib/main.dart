@@ -13,6 +13,8 @@ void main() => runApp(MyApp());
 //choose symbol
 //play game
 
+// this main app widget keeps track of the child widget, Grid.
+
 class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
@@ -33,12 +35,17 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Tic Tac Toe'),
         ),
-        body: Center(
-          child: Grid(
+        body: Stack(children: [
+          Grid(
             active: _active,
             onChanged: _handleShowGrid,
           ),
-        ),
+          AnimatedPositioned(
+            child: Menu(),
+            duration: Duration(seconds: 5),
+            curve: Curves.bounceIn,
+          )
+        ]),
       ),
     );
   }
