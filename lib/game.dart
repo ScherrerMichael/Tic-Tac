@@ -83,10 +83,7 @@ class Grid extends StatelessWidget {
         IconSelect(),
       ]);
     } else
-      return Container(
-        width: 0.0,
-        height: 0.0,
-      );
+      return Container();
   }
 }
 

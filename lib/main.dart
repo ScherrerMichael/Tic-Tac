@@ -24,6 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _active = false;
   bool _showMenu = true;
+  bool _isMultiplayer = false;
 
   void _handleShowGrid(bool newValue) {
     setState(() {
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text(_showMenu ? 'One player' : 'Two Player'),
+          title: Text(_isMultiplayer ? 'Two Player' : 'One Player'),
         ),
         body: Container(
           child: Stack(children: [
@@ -45,13 +46,16 @@ class _MyAppState extends State<MyApp> {
             //   onChanged: _handleShowGrid,
             // ),
             AnimatedPositioned(
-              top: _showMenu ? 150 : 5,
+              top: _showMenu ? 200 : 1,
+              left: 100,
+              right: 100,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInCubic,
               child: Menu(
                 menuCallback: (bool value) {
                   setState(() {
-                    _showMenu = !_showMenu;
+                    print("value: $value");
+                    _isMultiplayer = value;
                   });
                 },
               ),
