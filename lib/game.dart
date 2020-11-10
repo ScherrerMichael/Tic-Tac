@@ -43,35 +43,50 @@ class _BoxWidgetState extends State<BoxW> {
 // the grid houses 9 boxes for the game.
 
 class Grid extends StatelessWidget {
-  @override
+  Grid({Key key, this.active: false, @required this.onChanged})
+      : super(key: key);
+
+  final bool active;
+  final ValueChanged<bool> onChanged;
+
+  void _handleToggleGrid() {
+    onChanged(!active);
+  }
+
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BoxW(),
-          BoxW(),
-          BoxW(),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BoxW(),
-          BoxW(),
-          BoxW(),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BoxW(),
-          BoxW(),
-          BoxW(),
-        ],
-      ),
-      IconSelect(),
-    ]);
+    if (active) {
+      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BoxW(),
+            BoxW(),
+            BoxW(),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BoxW(),
+            BoxW(),
+            BoxW(),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BoxW(),
+            BoxW(),
+            BoxW(),
+          ],
+        ),
+        IconSelect(),
+      ]);
+    } else
+      return Container(
+        width: 0.0,
+        height: 0.0,
+      );
   }
 }
 

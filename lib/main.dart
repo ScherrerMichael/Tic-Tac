@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import './game.dart';
+import './welcome.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,8 +13,19 @@ void main() => runApp(MyApp());
 //choose symbol
 //play game
 
-class MyApp extends StatelessWidget {
-  @override
+class MyApp extends StatefulWidget {
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _active = false;
+
+  void _handleShowGrid(bool newValue) {
+    setState(() {
+      _active = newValue;
+    });
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
@@ -22,7 +34,10 @@ class MyApp extends StatelessWidget {
           title: Text('Tic Tac Toe'),
         ),
         body: Center(
-          child: Grid(),
+          child: Grid(
+            active: _active,
+            onChanged: _handleShowGrid,
+          ),
         ),
       ),
     );
