@@ -21,6 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _active = false;
+  bool _showMenu = true;
 
   void _handleShowGrid(bool newValue) {
     setState(() {
@@ -33,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Tic Tac Toe'),
+          title: Text(_showMenu ? 'showing menu' : 'not showing menu'),
         ),
         body: Stack(children: [
           Grid(
@@ -41,7 +42,13 @@ class _MyAppState extends State<MyApp> {
             onChanged: _handleShowGrid,
           ),
           AnimatedPositioned(
-            child: Menu(),
+            child: Menu(
+              menuCallback: (bool value) {
+                setState(() {
+                  _showMenu = !_showMenu;
+                });
+              },
+            ),
             duration: Duration(seconds: 5),
             curve: Curves.bounceIn,
           )

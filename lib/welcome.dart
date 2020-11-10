@@ -1,13 +1,14 @@
 //Welcome screen for when user started the app.
 import 'package:flutter/material.dart';
 
-class Menu extends StatefulWidget {
-  _MenuState createState() => _MenuState();
-}
+typedef MenuCallBack = void Function(bool isActive);
 
-class _MenuState extends State<Menu> {
-  void _createGame() {}
+class Menu extends StatelessWidget {
+  const Menu({this.menuCallback});
 
+  final MenuCallBack menuCallback;
+
+  @override
   Widget build(BuildContext buildContext) {
     return (Center(
         child: Container(
@@ -33,7 +34,7 @@ class _MenuState extends State<Menu> {
                       child: Text('One Player'),
                       onPressed: () {
                         print('One player selected');
-                        _createGame();
+                        menuCallback(true);
                       },
                     ),
                     TextButton(
@@ -46,7 +47,7 @@ class _MenuState extends State<Menu> {
                       child: Text('Two Player'),
                       onPressed: () {
                         print('Two Player Selected');
-                        _createGame();
+                        menuCallback(true);
                       },
                     )
                   ],

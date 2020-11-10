@@ -49,9 +49,9 @@ class Grid extends StatelessWidget {
   final bool active;
   final ValueChanged<bool> onChanged;
 
-  void _handleToggleGrid() {
-    onChanged(!active);
-  }
+  // void _handleToggleGrid() {
+  //   onChanged(!active);
+  // }
 
   Widget build(BuildContext context) {
     if (active) {
