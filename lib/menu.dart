@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 
 enum MenuScreen { playerSelect, playerNames, playGame }
+enum HomeScreen { start, welcome, play }
 
-typedef HomeCallBack = void Function(bool isActive);
+typedef HomeCallBack = void Function(HomeScreen state);
 typedef MenuCallBack = void Function(MenuScreen state);
 
 class PlayerSelectBar extends StatelessWidget {
@@ -27,7 +28,7 @@ class PlayerSelectBar extends StatelessWidget {
           child: Text('One Player'),
           onPressed: () {
             print('One Player Selected');
-            homeCallBack(false);
+            // homeCallBack(false);
             menuCallBack(MenuScreen.playerNames);
           },
         ),
@@ -44,11 +45,28 @@ class PlayerSelectBar extends StatelessWidget {
           child: Text('Two Player'),
           onPressed: () {
             print('Two Player Selected');
-            homeCallBack(true);
+            // homeCallBack(true);
             menuCallBack(MenuScreen.playerNames);
           },
         )
       ],
+    ));
+  }
+}
+
+class PlayerSetup extends StatelessWidget {
+  final HomeCallBack homeCallBack;
+  final MenuCallBack menuCallBack;
+  const PlayerSetup({@required this.homeCallBack, @required this.menuCallBack});
+
+  Widget build(BuildContext buildcontext) {
+    return (Container(
+      child: TextButton(
+        child: Text("button"),
+        onPressed: () {
+          menuCallBack(MenuScreen.playGame);
+        },
+      ),
     ));
   }
 }
@@ -63,12 +81,53 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   HomeCallBack homeCallBack;
 
-  _MenuState({@required this.homeCallBack}) {}
+  _MenuState({@required this.homeCallBack});
 
+  //var currentScreen = MenuScreen.playerSelect;
   var currentScreen = MenuScreen.playerSelect;
 
   void changeMenuScreen(MenuScreen screen) {
     currentScreen = screen;
+  }
+
+  StatelessWidget showScreen(MenuScreen screen) {
+    switch (screen) {
+      case MenuScreen.playerSelect:
+        {
+          return PlayerSelectBar(
+              homeCallBack: homeCallBack,
+              menuCallBack: (MenuScreen screen) {
+                setState(() {
+                  changeMenuScreen(screen);
+                });
+              });
+        }
+        break;
+
+      case MenuScreen.playerNames:
+        {
+          return PlayerSetup(
+              homeCallBack: homeCallBack,
+              menuCallBack: (MenuScreen screen) {
+                setState(() {
+                  changeMenuScreen(screen);
+                });
+              });
+        }
+        break;
+
+      case MenuScreen.playGame:
+        {
+          return (Text("play gmae"));
+        }
+        break;
+
+      default:
+        {
+          return (Text("oops!"));
+        }
+        break;
+    }
   }
 
   @override
@@ -84,15 +143,7 @@ class _MenuState extends State<Menu> {
                 SizedBox(
                   height: 150,
                 ),
-                if (currentScreen == MenuScreen.playerSelect)
-                  PlayerSelectBar(
-                    homeCallBack: homeCallBack,
-                    menuCallBack: (MenuScreen screen) {
-                      setState(() {
-                        changeMenuScreen(screen);
-                      });
-                    },
-                  ),
+                showScreen(currentScreen),
               ],
             ))));
   }

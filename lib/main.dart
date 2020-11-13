@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import './game.dart';
-import './welcome.dart';
+import './menu.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,14 +22,13 @@ class MyApp extends StatefulWidget {
 //TODO somehow the Grid is messing up the animations...??
 
 class _MyAppState extends State<MyApp> {
-  bool _active = false;
   bool _showMenu = true;
   bool _isMultiplayer = false;
 
-  void _handleShowGrid(bool newValue) {
-    setState(() {
-      _active = newValue;
-    });
+  var currentScreen = HomeScreen.welcome;
+
+  void changeHomeScreen(HomeScreen screen) {
+    currentScreen = screen;
   }
 
   Widget build(BuildContext context) {
@@ -52,10 +51,10 @@ class _MyAppState extends State<MyApp> {
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInCubic,
               child: Menu(
-                homeCallBack: (bool value) {
+                homeCallBack: (HomeScreen screen) {
                   setState(() {
-                    print("value: $value");
-                    _isMultiplayer = value;
+                    print("value: $screen");
+                    currentScreen = screen;
                   });
                 },
               ),

@@ -16,7 +16,7 @@ class GameData {
     this._playerOneName = playerOneName;
     this._playerTwoName = playerTwoName;
     print(
-        "initial game data created, \n player one name: ${_playerOneName} \n player two name: ${_playerTwoName}");
+        "initial game data created, \n player one name: $_playerOneName \n player two name: $_playerTwoName");
   }
 
   String get playerOneName {
