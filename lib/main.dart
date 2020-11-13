@@ -19,13 +19,11 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-//TODO somehow the Grid is messing up the animations...??
-
 class _MyAppState extends State<MyApp> {
-  bool _showMenu = true;
   bool _isMultiplayer = false;
 
   var currentScreen = HomeScreen.welcome;
+  // var currentScreen = HomeScreen.play;
 
   void changeHomeScreen(HomeScreen screen) {
     currentScreen = screen;
@@ -40,25 +38,24 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Container(
           child: Stack(children: [
-            // Grid(
-            //   active: _active,
-            //   onChanged: _handleShowGrid,
-            // ),
-            AnimatedPositioned(
-              top: _showMenu ? 200 : 1,
-              left: 100,
-              right: 100,
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInCubic,
-              child: Menu(
-                homeCallBack: (HomeScreen screen) {
-                  setState(() {
-                    print("value: $screen");
-                    currentScreen = screen;
-                  });
-                },
-              ),
-            )
+            Grid(),
+            if (currentScreen == HomeScreen.welcome)
+              AnimatedPositioned(
+                top: currentScreen != HomeScreen.play ? 200 : 1,
+                left: 100,
+                right: 100,
+                height: currentScreen != HomeScreen.play ? 400 : 50,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInCubic,
+                child: Menu(
+                  homeCallBack: (HomeScreen screen) {
+                    setState(() {
+                      print("value");
+                      currentScreen = screen;
+                    });
+                  },
+                ),
+              )
           ]),
         ),
       ),

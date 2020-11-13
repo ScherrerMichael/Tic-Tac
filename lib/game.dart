@@ -4,11 +4,18 @@ import 'package:flutter/material.dart';
 // class for each clickable box to be used in the game's grid.
 
 class BoxW extends StatefulWidget {
+  Border border;
+
+  BoxW({this.border});
+
   @override
-  _BoxWidgetState createState() => _BoxWidgetState();
+  _BoxWidgetState createState() => _BoxWidgetState(border: this.border);
 }
 
 class _BoxWidgetState extends State<BoxW> {
+  Border border;
+  _BoxWidgetState({this.border});
+
   bool _isOn = false;
 
   Color _color;
@@ -34,7 +41,7 @@ class _BoxWidgetState extends State<BoxW> {
           height: 100,
           decoration: BoxDecoration(
             color: _color,
-            border: Border.all(),
+            border: this.border,
           ),
         ));
   }
@@ -43,90 +50,35 @@ class _BoxWidgetState extends State<BoxW> {
 // the grid houses 9 boxes for the game.
 
 class Grid extends StatelessWidget {
-  Grid({Key key, this.active: false, @required this.onChanged})
-      : super(key: key);
-
-  final bool active;
-  final ValueChanged<bool> onChanged;
-
-  // void _handleToggleGrid() {
-  //   onChanged(!active);
-  // }
-
   Widget build(BuildContext context) {
-    if (active) {
-      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BoxW(),
-            BoxW(),
-            BoxW(),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BoxW(),
-            BoxW(),
-            BoxW(),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BoxW(),
-            BoxW(),
-            BoxW(),
-          ],
-        ),
-        IconSelect(),
-      ]);
-    } else
-      return Container();
-  }
-}
-
-// class for choosing whether to use X's or O's in the game
-
-enum icon { x, o }
-
-class IconSelect extends StatefulWidget {
-  @override
-  _IconSelectState createState() => _IconSelectState();
-}
-
-class _IconSelectState extends State<IconSelect> {
-  icon _currentIcon = icon.x;
-
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          title: const Text('X'),
-          leading: Radio(
-            value: icon.x,
-            groupValue: _currentIcon,
-            onChanged: (icon value) {
-              setState(() {
-                _currentIcon = value;
-              });
-            },
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BoxW(
+            // top left
+            border: Border(bottom: BorderSide(color: Colors.black)),
           ),
-        ),
-        ListTile(
-          title: const Text('O'),
-          leading: Radio(
-            value: icon.o,
-            groupValue: _currentIcon,
-            onChanged: (icon value) {
-              setState(() {
-                _currentIcon = value;
-              });
-            },
-          ),
-        ),
-      ],
-    );
+          BoxW(), // top middle
+          BoxW(), // top right
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BoxW(), // middle left
+          BoxW(), // middle middle
+          BoxW(), // middle right
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BoxW(), // bottom left
+          BoxW(), // bottom middle
+          BoxW(), // botom right
+        ],
+      ),
+    ]);
   }
 }

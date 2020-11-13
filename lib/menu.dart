@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 enum MenuScreen { playerSelect, playerNames, playGame }
-enum HomeScreen { start, welcome, play }
+enum HomeScreen { welcome, play }
 
 typedef HomeCallBack = void Function(HomeScreen state);
 typedef MenuCallBack = void Function(MenuScreen state);
@@ -64,6 +64,7 @@ class PlayerSetup extends StatelessWidget {
       child: TextButton(
         child: Text("button"),
         onPressed: () {
+          homeCallBack(HomeScreen.play);
           menuCallBack(MenuScreen.playGame);
         },
       ),
