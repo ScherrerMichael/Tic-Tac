@@ -1,12 +1,15 @@
 //Welcome screen for when user started the app.
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 enum MenuScreen { playerSelect, playerNames, playGame }
-enum HomeScreen { welcome, play }
+enum HomeScreen { welcome, icon, play }
 
 typedef HomeCallBack = void Function(HomeScreen state);
 typedef MenuCallBack = void Function(MenuScreen state);
 
+// Player Selects if the game will be single player or multiplayer
 class PlayerSelectBar extends StatelessWidget {
   const PlayerSelectBar(
       {@required this.homeCallBack, @required this.menuCallBack});
@@ -25,10 +28,10 @@ class PlayerSelectBar extends StatelessWidget {
             backgroundColor: Colors.teal,
             onSurface: Colors.grey,
           ),
-          child: Text('One Player'),
+          child: Icon(Icons.person),
           onPressed: () {
             print('One Player Selected');
-            // homeCallBack(false);
+            homeCallBack(HomeScreen.icon);
             menuCallBack(MenuScreen.playerNames);
           },
         ),
@@ -42,10 +45,10 @@ class PlayerSelectBar extends StatelessWidget {
             backgroundColor: Colors.teal,
             onSurface: Colors.grey,
           ),
-          child: Text('Two Player'),
+          child: Icon(Icons.people),
           onPressed: () {
             print('Two Player Selected');
-            // homeCallBack(true);
+            homeCallBack(HomeScreen.icon);
             menuCallBack(MenuScreen.playerNames);
           },
         )
@@ -54,24 +57,52 @@ class PlayerSelectBar extends StatelessWidget {
   }
 }
 
+// Here The player will select thier icons from a scrollable list, then they may press play
 class PlayerSetup extends StatelessWidget {
   final HomeCallBack homeCallBack;
   final MenuCallBack menuCallBack;
-  const PlayerSetup({@required this.homeCallBack, @required this.menuCallBack});
+  PlayerSetup({@required this.homeCallBack, @required this.menuCallBack});
+
+  // TODO: this is very bad, using this as an example for listview currently.
+  List<String> items = List<String>.generate(100, (i) => "Item $i");
 
   Widget build(BuildContext buildcontext) {
     return (Container(
-      child: TextButton(
-        child: Text("button"),
-        onPressed: () {
-          homeCallBack(HomeScreen.play);
-          menuCallBack(MenuScreen.playGame);
-        },
+      width: 400,
+      height: 400,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text("Player 1 Icon: "),
+              Icon(Icons.android_outlined),
+            ],
+          ),
+          Expanded(
+              child: ListView.builder(
+                  // exmaple list view!!!
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text('${items[index]}'),
+                    );
+                  }))
+        ],
       ),
     ));
   }
+
+  // child: TextButton(
+  //   child: Text("button"),
+  //   onPressed: () {
+  //     homeCallBack(HomeScreen.play);
+  //     menuCallBack(MenuScreen.playGame);
+  //   },
+  // ),
+
 }
 
+// The menu widget to hold all of the screens
 class Menu extends StatefulWidget {
   final HomeCallBack homeCallBack;
   Menu({@required this.homeCallBack});
@@ -135,8 +166,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext buildContext) {
     return (Center(
         child: Container(
-            width: 400,
-            height: 400,
+            width: 500,
             color: Colors.amber,
             child: Column(
               children: [

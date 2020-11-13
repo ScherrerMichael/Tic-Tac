@@ -37,25 +37,25 @@ class _MyAppState extends State<MyApp> {
           title: Text(_isMultiplayer ? 'Two Player' : 'One Player'),
         ),
         body: Container(
+          constraints: null,
           child: Stack(children: [
-            Grid(),
-            if (currentScreen == HomeScreen.welcome)
-              AnimatedPositioned(
-                top: currentScreen != HomeScreen.play ? 200 : 1,
-                left: 100,
-                right: 100,
-                height: currentScreen != HomeScreen.play ? 400 : 50,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeInCubic,
-                child: Menu(
-                  homeCallBack: (HomeScreen screen) {
-                    setState(() {
-                      print("value");
-                      currentScreen = screen;
-                    });
-                  },
-                ),
-              )
+            // Grid(),
+            AnimatedPositioned(
+              top: currentScreen != HomeScreen.icon ? 200 : 100,
+              left: 100,
+              right: 100,
+              height: currentScreen == HomeScreen.icon ? 600 : 400,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInCubic,
+              child: Menu(
+                homeCallBack: (HomeScreen screen) {
+                  setState(() {
+                    print("current screen = $screen");
+                    currentScreen = screen;
+                  });
+                },
+              ),
+            )
           ]),
         ),
       ),
