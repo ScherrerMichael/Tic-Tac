@@ -1,6 +1,4 @@
 //Welcome screen for when user started the app.
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 
 enum MenuScreen { playerSelect, playerNames, playGame }
@@ -64,7 +62,7 @@ class PlayerSetup extends StatelessWidget {
   PlayerSetup({@required this.homeCallBack, @required this.menuCallBack});
 
   // TODO: this is very bad, using this as an example for listview currently.
-  List<String> items = List<String>.generate(100, (i) => "Item $i");
+  final List<String> items = List<String>.generate(100, (i) => "Item $i");
 
   Widget build(BuildContext buildcontext) {
     return (Container(

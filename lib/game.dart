@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // class for each clickable box to be used in the game's grid.
 
 class BoxW extends StatefulWidget {
-  Border border;
+  final Border border;
 
   BoxW({this.border});
 

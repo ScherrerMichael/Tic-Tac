@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import './game.dart';
+// import './game.dart';
 import './menu.dart';
 
 void main() => runApp(MyApp());
