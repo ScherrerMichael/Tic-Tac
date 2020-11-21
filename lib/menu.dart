@@ -61,8 +61,10 @@ class PlayerSetup extends StatelessWidget {
   final MenuCallBack menuCallBack;
   PlayerSetup({@required this.homeCallBack, @required this.menuCallBack});
 
+  final List<String> stringList = ["X", "O"];
+
   // TODO: this is very bad, using this as an example for listview currently.
-  final List<String> items = List<String>.generate(100, (i) => "Item $i");
+  final List<String> items = List<String>.generate(2, (i) => "Item $i");
 
   Widget build(BuildContext buildcontext) {
     return (Container(
@@ -71,10 +73,14 @@ class PlayerSetup extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Player 1 Icon: "),
-              Icon(Icons.android_outlined),
+              //TODO: change the class to be stateful and change symbol on listItem opnpress.
+              Text("Player 1 Icon: X"),
             ],
+          ),
+          SizedBox(
+            height: 50,
           ),
           Expanded(
               child: ListView.builder(
@@ -82,9 +88,29 @@ class PlayerSetup extends StatelessWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text('${items[index]}'),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                              child: Text(stringList[index]),
+                              onPressed: () => {}),
+                        ],
+                      ),
                     );
-                  }))
+                  })),
+          SizedBox(
+            height: 20,
+          ),
+          TextButton(
+            child: Text("Confirm"),
+            style: TextButton.styleFrom(
+              minimumSize: Size(100, 50),
+              primary: Colors.white,
+              backgroundColor: Colors.teal,
+              onSurface: Colors.grey,
+            ),
+            onPressed: () => {print("player 1 confirmed")},
+          )
         ],
       ),
     ));
