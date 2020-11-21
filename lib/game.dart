@@ -59,23 +59,52 @@ class Grid extends StatelessWidget {
             // top left
             border: Border(bottom: BorderSide(color: Colors.black)),
           ),
-          BoxW(), // top middle
-          BoxW(), // top right
+          BoxW(
+            // top middle
+            border: Border(
+              left: BorderSide(color: Colors.black),
+              right: BorderSide(color: Colors.black),
+              bottom: BorderSide(color: Colors.black),
+            ),
+          ),
+          BoxW(
+            //top right
+            border: Border(bottom: BorderSide(color: Colors.black)),
+          ),
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BoxW(), // middle left
-          BoxW(), // middle middle
-          BoxW(), // middle right
+          BoxW(
+            border: Border(
+              bottom: BorderSide(color: Colors.black),
+            ),
+          ), // middle left
+          BoxW(
+            border: Border(
+              left: BorderSide(color: Colors.black),
+              right: BorderSide(color: Colors.black),
+            ),
+          ), // middle middle
+          BoxW(
+            border: Border(
+              bottom: BorderSide(color: Colors.black),
+            ),
+          ), // middle right
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BoxW(), // bottom left
-          BoxW(), // bottom middle
+          BoxW(
+            border: Border(
+              left: BorderSide(color: Colors.black),
+              right: BorderSide(color: Colors.black),
+              top: BorderSide(color: Colors.black),
+            ),
+          ), // bottom middle
           BoxW(), // botom right
         ],
       ),

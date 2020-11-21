@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-// import './game.dart';
+import './game.dart';
 import './menu.dart';
 
 void main() => runApp(MyApp());
@@ -22,8 +22,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _isMultiplayer = false;
 
-  var currentScreen = HomeScreen.welcome;
-  // var currentScreen = HomeScreen.play;
+  // var currentScreen = HomeScreen.welcome;
+  var currentScreen = HomeScreen.play;
 
   void changeHomeScreen(HomeScreen screen) {
     currentScreen = screen;
@@ -39,23 +39,24 @@ class _MyAppState extends State<MyApp> {
         body: Container(
           constraints: null,
           child: Stack(children: [
-            // Grid(),
-            AnimatedPositioned(
-              top: currentScreen != HomeScreen.icon ? 200 : 100,
-              left: 100,
-              right: 100,
-              height: currentScreen == HomeScreen.icon ? 600 : 400,
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInCubic,
-              child: Menu(
-                homeCallBack: (HomeScreen screen) {
-                  setState(() {
-                    print("current screen = $screen");
-                    currentScreen = screen;
-                  });
-                },
-              ),
-            )
+            currentScreen == HomeScreen.play
+                ? Grid()
+                : AnimatedPositioned(
+                    top: currentScreen != HomeScreen.icon ? 200 : 100,
+                    left: 100,
+                    right: 100,
+                    height: currentScreen == HomeScreen.icon ? 600 : 400,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInCubic,
+                    child: Menu(
+                      homeCallBack: (HomeScreen screen) {
+                        setState(() {
+                          print("current screen = $screen");
+                          currentScreen = screen;
+                        });
+                      },
+                    ),
+                  )
           ]),
         ),
       ),
