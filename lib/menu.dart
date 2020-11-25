@@ -1,5 +1,6 @@
 //Welcome screen for when user started the app.
 import 'package:flutter/material.dart';
+import './data.dart';
 
 enum MenuScreen { playerSelect, playerNames, playGame }
 enum HomeScreen { welcome, icon, play }
@@ -115,15 +116,6 @@ class PlayerSetup extends StatelessWidget {
       ),
     ));
   }
-
-  // child: TextButton(
-  //   child: Text("button"),
-  //   onPressed: () {
-  //     homeCallBack(HomeScreen.play);
-  //     menuCallBack(MenuScreen.playGame);
-  //   },
-  // ),
-
 }
 
 // The menu widget to hold all of the screens
@@ -139,7 +131,6 @@ class _MenuState extends State<Menu> {
 
   _MenuState({@required this.homeCallBack});
 
-  //var currentScreen = MenuScreen.playerSelect;
   var currentScreen = MenuScreen.playerSelect;
 
   void changeMenuScreen(MenuScreen screen) {

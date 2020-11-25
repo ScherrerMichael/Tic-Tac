@@ -1,10 +1,7 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import './game.dart';
 import './menu.dart';
+import './data.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,11 +22,9 @@ class _MyAppState extends State<MyApp> {
   // var currentScreen = HomeScreen.welcome;
   var currentScreen = HomeScreen.play;
 
-  void changeHomeScreen(HomeScreen screen) {
-    currentScreen = screen;
-  }
-
   Widget build(BuildContext context) {
+    GameData gameData = new GameData(false);
+
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
@@ -40,7 +35,9 @@ class _MyAppState extends State<MyApp> {
           constraints: null,
           child: Stack(children: [
             currentScreen == HomeScreen.play
-                ? Grid()
+                ? Grid(
+                    data: gameData,
+                  )
                 : AnimatedPositioned(
                     top: currentScreen != HomeScreen.icon ? 200 : 100,
                     left: 100,

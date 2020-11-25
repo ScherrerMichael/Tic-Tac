@@ -9,12 +9,16 @@ class GameData {
   int playerTwoScore;
   String playerTwoIcon;
 
+  List<List<int>> grid;
+
   GameData(bool isMultiplayer,
       {String playerOneName: "Player One",
-      String playerTwoName = "Player Two"}) {
+      String playerTwoName: "Player Two"}) {
     this.isMultiplayer = isMultiplayer;
     this._playerOneName = playerOneName;
     this._playerTwoName = playerTwoName;
+    grid = List<List<int>>.generate(3, (i) => List<int>.generate(3, (j) => 0));
+    print(grid);
     print(
         "initial game data created, \n player one name: $_playerOneName \n player two name: $_playerTwoName");
   }
@@ -33,5 +37,10 @@ class GameData {
 
   set playerTwoName(String name) {
     this._playerTwoName = name;
+  }
+
+  void setGrid(int row, int col, int state) {
+    grid[row][col] = state;
+    print(grid);
   }
 }

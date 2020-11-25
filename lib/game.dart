@@ -1,40 +1,52 @@
-//Game logic.
 import 'package:flutter/material.dart';
+import './data.dart';
 
 // class for each clickable box to be used in the game's grid.
 
 class BoxW extends StatefulWidget {
   final Border border;
+  final Function(int, int) onSelected;
+  final int col;
+  final int row;
 
-  BoxW({this.border});
+  BoxW(
+      {this.border,
+      @required this.onSelected,
+      @required this.row,
+      @required this.col});
 
   @override
-  _BoxWidgetState createState() => _BoxWidgetState(border: this.border);
+  _BoxWidgetState createState() => _BoxWidgetState(
+      border: this.border,
+      onSelected: onSelected,
+      row: this.row,
+      col: this.col);
 }
 
 class _BoxWidgetState extends State<BoxW> {
   Border border;
-  _BoxWidgetState({this.border});
+
+  Function(int, int) onSelected;
+  int row;
+  int col;
+
+  _BoxWidgetState({
+    this.border,
+    @required this.onSelected,
+    @required this.row,
+    @required this.col,
+  });
 
   bool _isOn = false;
 
   Color _color;
 
-  void _toggleClicked() {
-    setState(() {
-      _isOn = !_isOn;
-      if (_isOn) {
-        _color = Colors.white70;
-      } else {
-        _color = Colors.green;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: _toggleClicked,
+        onPressed: () {
+          onSelected(row, col);
+        },
         // color: _color,
         child: Container(
           width: 100,
@@ -50,17 +62,29 @@ class _BoxWidgetState extends State<BoxW> {
 // the grid houses 9 boxes for the game.
 
 class Grid extends StatelessWidget {
+  GameData data;
+
+  Grid({@required this.data});
+
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BoxW(
-            // top left
+            row: 0,
+            col: 0,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(bottom: BorderSide(color: Colors.black)),
           ),
           BoxW(
-            // top middle
+            row: 0,
+            col: 1,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(
               left: BorderSide(color: Colors.black),
               right: BorderSide(color: Colors.black),
@@ -69,6 +93,11 @@ class Grid extends StatelessWidget {
           ),
           BoxW(
             //top right
+            row: 0,
+            col: 2,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(bottom: BorderSide(color: Colors.black)),
           ),
         ],
@@ -77,17 +106,32 @@ class Grid extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BoxW(
+            row: 1,
+            col: 0,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(
               bottom: BorderSide(color: Colors.black),
             ),
           ), // middle left
           BoxW(
+            row: 1,
+            col: 1,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(
               left: BorderSide(color: Colors.black),
               right: BorderSide(color: Colors.black),
             ),
           ), // middle middle
           BoxW(
+            row: 1,
+            col: 2,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(
               bottom: BorderSide(color: Colors.black),
             ),
@@ -97,15 +141,32 @@ class Grid extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BoxW(), // bottom left
           BoxW(
+            row: 2,
+            col: 0,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
+          ), // bottom left
+          BoxW(
+            row: 2,
+            col: 1,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
             border: Border(
               left: BorderSide(color: Colors.black),
               right: BorderSide(color: Colors.black),
               top: BorderSide(color: Colors.black),
             ),
           ), // bottom middle
-          BoxW(), // botom right
+          BoxW(
+            row: 2,
+            col: 2,
+            onSelected: (int row, int col) {
+              data.setGrid(row, col, 1);
+            },
+          ), // botom right
         ],
       ),
     ]);
