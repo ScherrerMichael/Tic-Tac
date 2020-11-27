@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInCubic,
                     child: Menu(
+                      data: gameData,
                       homeCallBack: (HomeScreen screen) {
                         setState(() {
                           print("current screen = $screen");

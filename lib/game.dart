@@ -37,23 +37,23 @@ class _BoxWidgetState extends State<BoxW> {
     @required this.col,
   });
 
-  bool _isOn = false;
-
-  Color _color;
+  var _color = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () {
           onSelected(row, col);
+          setState(() {
+            _color = Colors.cyan;
+          });
         },
-        // color: _color,
         child: Container(
           width: 100,
           height: 100,
           decoration: BoxDecoration(
-            color: _color,
             border: this.border,
+            color: _color,
           ),
         ));
   }
@@ -62,12 +62,13 @@ class _BoxWidgetState extends State<BoxW> {
 // the grid houses 9 boxes for the game.
 
 class Grid extends StatelessWidget {
-  GameData data;
+  final GameData data;
 
   Grid({@required this.data});
 
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text("data"),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -75,7 +76,7 @@ class Grid extends StatelessWidget {
             row: 0,
             col: 0,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(bottom: BorderSide(color: Colors.black)),
           ),
@@ -83,7 +84,7 @@ class Grid extends StatelessWidget {
             row: 0,
             col: 1,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(
               left: BorderSide(color: Colors.black),
@@ -96,7 +97,7 @@ class Grid extends StatelessWidget {
             row: 0,
             col: 2,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(bottom: BorderSide(color: Colors.black)),
           ),
@@ -109,7 +110,7 @@ class Grid extends StatelessWidget {
             row: 1,
             col: 0,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(
               bottom: BorderSide(color: Colors.black),
@@ -119,7 +120,7 @@ class Grid extends StatelessWidget {
             row: 1,
             col: 1,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(
               left: BorderSide(color: Colors.black),
@@ -130,7 +131,7 @@ class Grid extends StatelessWidget {
             row: 1,
             col: 2,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(
               bottom: BorderSide(color: Colors.black),
@@ -145,14 +146,14 @@ class Grid extends StatelessWidget {
             row: 2,
             col: 0,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
           ), // bottom left
           BoxW(
             row: 2,
             col: 1,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
             border: Border(
               left: BorderSide(color: Colors.black),
@@ -164,7 +165,7 @@ class Grid extends StatelessWidget {
             row: 2,
             col: 2,
             onSelected: (int row, int col) {
-              data.setGrid(row, col, 1);
+              data.setGrid(row, col, 1, true);
             },
           ), // botom right
         ],

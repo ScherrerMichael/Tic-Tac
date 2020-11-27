@@ -10,8 +10,12 @@ typedef MenuCallBack = void Function(MenuScreen state);
 
 // Player Selects if the game will be single player or multiplayer
 class PlayerSelectBar extends StatelessWidget {
+  final GameData data;
+
   const PlayerSelectBar(
-      {@required this.homeCallBack, @required this.menuCallBack});
+      {@required this.homeCallBack,
+      @required this.menuCallBack,
+      @required this.data});
 
   final HomeCallBack homeCallBack;
   final MenuCallBack menuCallBack;
@@ -30,6 +34,7 @@ class PlayerSelectBar extends StatelessWidget {
           child: Icon(Icons.person),
           onPressed: () {
             print('One Player Selected');
+            data.isMultiplayer = false;
             homeCallBack(HomeScreen.icon);
             menuCallBack(MenuScreen.playerNames);
           },
@@ -47,6 +52,7 @@ class PlayerSelectBar extends StatelessWidget {
           child: Icon(Icons.people),
           onPressed: () {
             print('Two Player Selected');
+            data.isMultiplayer = true;
             homeCallBack(HomeScreen.icon);
             menuCallBack(MenuScreen.playerNames);
           },
@@ -60,7 +66,12 @@ class PlayerSelectBar extends StatelessWidget {
 class PlayerSetup extends StatelessWidget {
   final HomeCallBack homeCallBack;
   final MenuCallBack menuCallBack;
-  PlayerSetup({@required this.homeCallBack, @required this.menuCallBack});
+  final GameData data;
+
+  PlayerSetup(
+      {@required this.homeCallBack,
+      @required this.menuCallBack,
+      @required this.data});
 
   final List<String> stringList = ["X", "O"];
 
@@ -110,7 +121,10 @@ class PlayerSetup extends StatelessWidget {
               backgroundColor: Colors.teal,
               onSurface: Colors.grey,
             ),
-            onPressed: () => {print("player 1 confirmed")},
+            onPressed: () {
+              print("player 1 confirmed");
+              data.playerOneIcon = "X";
+            },
           )
         ],
       ),
@@ -121,15 +135,18 @@ class PlayerSetup extends StatelessWidget {
 // The menu widget to hold all of the screens
 class Menu extends StatefulWidget {
   final HomeCallBack homeCallBack;
-  Menu({@required this.homeCallBack});
+  final GameData data;
+  Menu({@required this.homeCallBack, @required this.data});
 
-  _MenuState createState() => _MenuState(homeCallBack: homeCallBack);
+  _MenuState createState() =>
+      _MenuState(homeCallBack: homeCallBack, data: this.data);
 }
 
 class _MenuState extends State<Menu> {
   HomeCallBack homeCallBack;
+  final GameData data;
 
-  _MenuState({@required this.homeCallBack});
+  _MenuState({@required this.homeCallBack, @required this.data});
 
   var currentScreen = MenuScreen.playerSelect;
 
@@ -142,6 +159,7 @@ class _MenuState extends State<Menu> {
       case MenuScreen.playerSelect:
         {
           return PlayerSelectBar(
+              data: data,
               homeCallBack: homeCallBack,
               menuCallBack: (MenuScreen screen) {
                 setState(() {
@@ -154,6 +172,7 @@ class _MenuState extends State<Menu> {
       case MenuScreen.playerNames:
         {
           return PlayerSetup(
+              data: this.data,
               homeCallBack: homeCallBack,
               menuCallBack: (MenuScreen screen) {
                 setState(() {
