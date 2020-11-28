@@ -1,25 +1,33 @@
+import 'package:flutter/material.dart';
+
 class GameData {
   final int rows = 3;
   final int col = 3;
 
-  bool isMultiplayer = false;
+  bool _isMultiplayer = false;
 
-  int currentPlayer = 1;
+  // no player = 0
+  // first player = 1
+  // second player / ai = 2
+
+  Color _currentColor = Colors.red;
+
+  int _currentPlayerTurn = 1;
 
   String _playerOneName;
-  int playerOneScore;
-  String playerOneIcon;
+  int _playerOneScore;
+  String _playerOneIcon;
 
   String _playerTwoName;
-  int playerTwoScore;
-  String playerTwoIcon;
+  int _playerTwoScore;
+  String _playerTwoIcon;
 
   List<List<int>> grid;
 
   GameData(bool isMultiplayer,
       {String playerOneName: "Player One",
       String playerTwoName: "Player Two"}) {
-    this.isMultiplayer = isMultiplayer;
+    this._isMultiplayer = isMultiplayer;
     this._playerOneName = playerOneName;
     this._playerTwoName = playerTwoName;
     grid = List<List<int>>.generate(3, (i) => List<int>.generate(3, (j) => 0));
@@ -36,6 +44,18 @@ class GameData {
     return _playerTwoName;
   }
 
+  set playerOneIcon(String icon) {
+    this._playerOneIcon = icon;
+  }
+
+  set playerTwoIcon(String icon) {
+    this._playerTwoIcon = icon;
+  }
+
+  set isMultiplayer(bool isMultiplayer) {
+    this._isMultiplayer = isMultiplayer;
+  }
+
   set playerOneName(String name) {
     this._playerOneName = name;
   }
@@ -44,11 +64,10 @@ class GameData {
     this._playerTwoName = name;
   }
 
-  void make_winner(bool player) {
-    if (player == true)
+  void makeWinner(int player) {
+    if (player == 1)
       print("Player $playerOneName has won!");
-    else
-      print("Player $playerTwoName has won!");
+    else if (player == 2) print("Player $playerTwoName has won!");
   }
 
   bool isFull() {
@@ -58,7 +77,7 @@ class GameData {
     return true;
   }
 
-  bool checkWin(int row, int col, int symbol, bool player) {
+  bool checkWin(int row, int col, int symbol, int player) {
     //verify:
 
     // diagonals
@@ -66,7 +85,7 @@ class GameData {
       if ((grid[0][0] == symbol) &&
           (grid[1][1] == symbol) &&
           (grid[2][2] == symbol)) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -76,7 +95,7 @@ class GameData {
       if (grid[0][0] == symbol &&
           grid[0][1] == symbol &&
           grid[0][2] == symbol) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -85,7 +104,7 @@ class GameData {
       if (grid[1][0] == symbol &&
           grid[1][1] == symbol &&
           grid[1][2] == symbol) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -94,7 +113,7 @@ class GameData {
       if (grid[2][0] == symbol &&
           grid[2][2] == symbol &&
           grid[2][2] == symbol) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -103,7 +122,7 @@ class GameData {
       if (grid[0][0] == symbol &&
           grid[1][0] == symbol &&
           grid[2][0] == symbol) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -112,7 +131,7 @@ class GameData {
       if (grid[0][1] == symbol &&
           grid[1][1] == symbol &&
           grid[2][1] == symbol) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -121,7 +140,7 @@ class GameData {
       if (grid[0][2] == symbol &&
           grid[1][2] == symbol &&
           grid[2][2] == symbol) {
-        make_winner(player);
+        makeWinner(player);
         return false;
       }
     }
@@ -135,9 +154,25 @@ class GameData {
     return true;
   }
 
-  void setGrid(int row, int col, int state, bool player) {
-    grid[row][col] = state;
-    checkWin(row, col, state, player);
-    print(grid);
+  get currentColor {
+    return this._currentColor;
+  }
+
+  get currentPlayerTurn {
+    return this._currentPlayerTurn;
+  }
+
+  void setGrid(int row, int col, int symbol, int player) {
+    grid[row][col] = symbol;
+    checkWin(row, col, symbol, player);
+
+    _currentPlayerTurn == 1 ? _currentPlayerTurn = 2 : _currentPlayerTurn = 1;
+
+    if (_currentColor == Colors.blue)
+      _currentColor = Colors.red;
+    else
+      _currentColor = Colors.blue;
+
+    print("current player turn = $_currentPlayerTurn");
   }
 }
