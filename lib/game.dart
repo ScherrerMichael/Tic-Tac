@@ -66,7 +66,6 @@ class Grid extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text("data"),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
