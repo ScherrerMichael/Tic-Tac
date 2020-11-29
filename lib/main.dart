@@ -17,8 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _isMultiplayer = false;
-
   var currentScreen = HomeScreen.welcome;
 
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text(_isMultiplayer ? 'Two Player' : 'One Player'),
+          title: Text("Tick Tack Toe"),
         ),
         body: Container(
           constraints: null,

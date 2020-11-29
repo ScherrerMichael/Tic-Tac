@@ -53,7 +53,7 @@ class PlayerSelectBar extends StatelessWidget {
           onPressed: () {
             print('Two Player Selected');
             data.isMultiplayer = true;
-            homeCallBack(HomeScreen.icon);
+            // homeCallBack(HomeScreen.icon);
             menuCallBack(MenuScreen.playerNames);
           },
         )
@@ -63,12 +63,28 @@ class PlayerSelectBar extends StatelessWidget {
 }
 
 // Here The player will select thier icons from a scrollable list, then they may press play
-class PlayerSetup extends StatelessWidget {
+class PlayerSetup extends StatefulWidget {
   final HomeCallBack homeCallBack;
   final MenuCallBack menuCallBack;
   final GameData data;
 
   PlayerSetup(
+      {@required this.homeCallBack,
+      @required this.menuCallBack,
+      @required this.data});
+
+  _PlayerSetupState createState() => _PlayerSetupState(
+      homeCallBack: this.homeCallBack,
+      menuCallBack: this.menuCallBack,
+      data: this.data);
+}
+
+class _PlayerSetupState extends State<PlayerSetup> {
+  final HomeCallBack homeCallBack;
+  final MenuCallBack menuCallBack;
+  final GameData data;
+
+  _PlayerSetupState(
       {@required this.homeCallBack,
       @required this.menuCallBack,
       @required this.data});
@@ -88,7 +104,7 @@ class PlayerSetup extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //TODO: change the class to be stateful and change symbol on listItem opnpress.
-              Text("Player 1 Icon: X"),
+              Text("Player 1 Icon: ${data.playerOneIcon}"),
             ],
           ),
           SizedBox(
@@ -105,8 +121,10 @@ class PlayerSetup extends StatelessWidget {
                         children: [
                           TextButton(
                               child: Text(stringList[index]),
-                              onPressed: () =>
-                                  {data.playerOneIcon = stringList[index]}),
+                              onPressed: () {
+                                data.playerOneIcon = stringList[index];
+                                setState(() {});
+                              }),
                         ],
                       ),
                     );
@@ -124,7 +142,8 @@ class PlayerSetup extends StatelessWidget {
             ),
             onPressed: () {
               print("player 1 confirmed");
-              data.playerOneIcon = "X";
+              // menuCallBack(MenuScreen.playGame);
+              homeCallBack(HomeScreen.play);
             },
           )
         ],
@@ -155,12 +174,12 @@ class _MenuState extends State<Menu> {
     currentScreen = screen;
   }
 
-  StatelessWidget showScreen(MenuScreen screen) {
+  Widget showScreen(MenuScreen screen) {
     switch (screen) {
       case MenuScreen.playerSelect:
         {
           return PlayerSelectBar(
-              data: data,
+              data: this.data,
               homeCallBack: homeCallBack,
               menuCallBack: (MenuScreen screen) {
                 setState(() {
@@ -184,7 +203,9 @@ class _MenuState extends State<Menu> {
         break;
 
       case MenuScreen.playGame:
-        {}
+        {
+          return Text("playing the game");
+        }
         break;
 
       default:

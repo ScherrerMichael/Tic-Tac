@@ -44,6 +44,14 @@ class GameData {
     return _playerTwoName;
   }
 
+  bool get isMultiplayer {
+    return _isMultiplayer;
+  }
+
+  get playerOneIcon {
+    return this._playerOneIcon;
+  }
+
   set playerOneIcon(String icon) {
     this._playerOneIcon = icon;
   }
