@@ -105,7 +105,8 @@ class PlayerSetup extends StatelessWidget {
                         children: [
                           TextButton(
                               child: Text(stringList[index]),
-                              onPressed: () => {}),
+                              onPressed: () =>
+                                  {data.playerOneIcon = stringList[index]}),
                         ],
                       ),
                     );
@@ -183,9 +184,7 @@ class _MenuState extends State<Menu> {
         break;
 
       case MenuScreen.playGame:
-        {
-          return (Text("play gmae"));
-        }
+        {}
         break;
 
       default:

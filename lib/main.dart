@@ -19,8 +19,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _isMultiplayer = false;
 
-  // var currentScreen = HomeScreen.welcome;
-  var currentScreen = HomeScreen.play;
+  var currentScreen = HomeScreen.welcome;
 
   Widget build(BuildContext context) {
     GameData gameData = new GameData(false);
