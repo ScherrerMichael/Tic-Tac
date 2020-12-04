@@ -48,6 +48,14 @@ class GameData {
     return _isMultiplayer;
   }
 
+  bool isActive(int row, int col) {
+    return (grid[row][col] == 0);
+  }
+
+  int gridAt(int row, int col) {
+    return grid[row][col];
+  }
+
   get playerOneIcon {
     return this._playerOneIcon;
   }

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import './data.dart';
 
@@ -10,21 +12,26 @@ class BoxW extends StatefulWidget {
   final int col;
   final int row;
   final BoxCallBack boxCallBack;
+  final _GridState parent;
 
-  BoxW(
-      {this.border,
-      @required this.row,
-      @required this.col,
-      @required this.data,
-      @required this.boxCallBack});
+  BoxW({
+    this.border,
+    @required this.row,
+    @required this.col,
+    @required this.data,
+    @required this.boxCallBack,
+    @required this.parent,
+  });
 
   @override
   _BoxWidgetState createState() => _BoxWidgetState(
-      border: this.border,
-      row: this.row,
-      col: this.col,
-      data: this.data,
-      boxCallBack: this.boxCallBack);
+        border: this.border,
+        row: this.row,
+        col: this.col,
+        data: this.data,
+        boxCallBack: this.boxCallBack,
+        parent: this.parent,
+      );
 }
 
 class _BoxWidgetState extends State<BoxW> {
@@ -34,6 +41,7 @@ class _BoxWidgetState extends State<BoxW> {
   int row;
   int col;
   final BoxCallBack boxCallBack;
+  _GridState parent;
 
   _BoxWidgetState({
     this.border,
@@ -41,20 +49,29 @@ class _BoxWidgetState extends State<BoxW> {
     @required this.row,
     @required this.col,
     @required this.boxCallBack,
+    @required this.parent,
   });
 
   var _color = Colors.white;
+  bool _selected = false;
 
   @override
   Widget build(BuildContext context) {
+    int value = data.gridAt(row, col);
+    setState(() {
+      if (value == 0 &&
+          (parent.selectedRow != this.row || parent.selectedCol != this.col))
+        _color = Colors.white;
+      else if (value == 1)
+        _color = Colors.blue;
+      else if (value == 2) _color = Colors.red;
+    });
     return TextButton(
         onPressed: () {
-          boxCallBack(this.row, this.col);
-          data.setGrid(this.row, this.col, data.currentPlayerTurn,
-              data.currentPlayerTurn);
           setState(() {
-            _color = data.currentColor;
+            if (data.isActive(row, col)) _color = data.currentColor;
           });
+          boxCallBack(this.row, this.col);
         },
         child: Container(
           width: 100,
@@ -104,6 +121,7 @@ class _GridState extends State<Grid> {
                 isButtonDisabled = false;
               });
             },
+            parent: this,
           ),
           BoxW(
             row: 0,
@@ -121,6 +139,7 @@ class _GridState extends State<Grid> {
                 isButtonDisabled = false;
               });
             },
+            parent: this,
           ),
           BoxW(
             //top right
@@ -135,6 +154,7 @@ class _GridState extends State<Grid> {
                 isButtonDisabled = false;
               });
             },
+            parent: this,
           ),
         ],
       ),
@@ -155,6 +175,7 @@ class _GridState extends State<Grid> {
                 isButtonDisabled = false;
               });
             },
+            parent: this,
           ), // middle left
           BoxW(
             row: 1,
@@ -171,6 +192,7 @@ class _GridState extends State<Grid> {
                 isButtonDisabled = false;
               });
             },
+            parent: this,
           ), // middle middle
           BoxW(
             row: 1,
@@ -180,10 +202,13 @@ class _GridState extends State<Grid> {
               bottom: BorderSide(color: Colors.black),
             ),
             boxCallBack: (int row, int col) {
-              selectedRow = row;
-              selectedCol = col;
-              isButtonDisabled = false;
+              setState(() {
+                selectedRow = row;
+                selectedCol = col;
+                isButtonDisabled = false;
+              });
             },
+            parent: this,
           ), // middle right
         ],
       ),
@@ -195,10 +220,13 @@ class _GridState extends State<Grid> {
             col: 0,
             data: this.data,
             boxCallBack: (int row, int col) {
-              selectedRow = row;
-              selectedCol = col;
-              isButtonDisabled = false;
+              setState(() {
+                selectedRow = row;
+                selectedCol = col;
+                isButtonDisabled = false;
+              });
             },
+            parent: this,
           ), // bottom left
           BoxW(
             row: 2,
@@ -210,10 +238,13 @@ class _GridState extends State<Grid> {
               top: BorderSide(color: Colors.black),
             ),
             boxCallBack: (int row, int col) {
-              selectedRow = row;
-              selectedCol = col;
-              isButtonDisabled = false;
+              setState(() {
+                selectedRow = row;
+                selectedCol = col;
+                isButtonDisabled = false;
+              });
             },
+            parent: this,
           ), // bottom middle
           BoxW(
             row: 2,
@@ -226,6 +257,7 @@ class _GridState extends State<Grid> {
                 isButtonDisabled = false;
               });
             },
+            parent: this,
           ), // botom right
         ],
       ),
@@ -255,6 +287,8 @@ class _GridState extends State<Grid> {
               onPressed: () {
                 setState(() {
                   isButtonDisabled = true;
+                  data.setGrid(selectedRow, selectedCol, data.currentPlayerTurn,
+                      data.currentPlayerTurn);
                 });
               },
             )
