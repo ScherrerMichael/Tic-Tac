@@ -94,7 +94,6 @@ class Grid extends StatefulWidget {
   _GridState createState() => _GridState(data: this.data);
 }
 
-//TODO: Im working on adding a confirm button, so I will need to make the gri stateful.
 class _GridState extends State<Grid> {
   final GameData data;
 
@@ -106,6 +105,7 @@ class _GridState extends State<Grid> {
 
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text("player turn: ${data.currentPlayerTurn}"),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -10,7 +10,7 @@ class GameData {
   // first player = 1
   // second player / ai = 2
 
-  Color _currentColor = Colors.red;
+  Color _currentColor = Colors.blue;
 
   int _currentPlayerTurn = 1;
 
