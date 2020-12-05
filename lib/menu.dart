@@ -21,41 +21,49 @@ class PlayerSelectBar extends StatelessWidget {
   final MenuCallBack menuCallBack;
 
   Widget build(BuildContext buildcontext) {
-    return (ButtonBar(
-      alignment: MainAxisAlignment.center,
+    return (Column(
       children: [
-        TextButton(
-          style: TextButton.styleFrom(
-            minimumSize: Size(100, 100),
-            primary: Colors.white,
-            backgroundColor: Colors.teal,
-            onSurface: Colors.grey,
-          ),
-          child: Icon(Icons.person),
-          onPressed: () {
-            print('One Player Selected');
-            data.isMultiplayer = false;
-            homeCallBack(HomeScreen.icon);
-            menuCallBack(MenuScreen.playerNames);
-          },
-        ),
+        Text("Game Type"),
         SizedBox(
-          width: 50,
+          height: 100,
         ),
-        TextButton(
-          style: TextButton.styleFrom(
-            minimumSize: Size(100, 100),
-            primary: Colors.white,
-            backgroundColor: Colors.teal,
-            onSurface: Colors.grey,
-          ),
-          child: Icon(Icons.people),
-          onPressed: () {
-            print('Two Player Selected');
-            data.isMultiplayer = true;
-            // homeCallBack(HomeScreen.icon);
-            menuCallBack(MenuScreen.playerNames);
-          },
+        ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                minimumSize: Size(100, 100),
+                primary: Colors.white,
+                backgroundColor: Colors.teal,
+                onSurface: Colors.grey,
+              ),
+              child: Icon(Icons.person),
+              onPressed: () {
+                print('One Player Selected');
+                data.isMultiplayer = false;
+                homeCallBack(HomeScreen.icon);
+                menuCallBack(MenuScreen.playerNames);
+              },
+            ),
+            SizedBox(
+              width: 50,
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                minimumSize: Size(100, 100),
+                primary: Colors.white,
+                backgroundColor: Colors.teal,
+                onSurface: Colors.grey,
+              ),
+              child: Icon(Icons.people),
+              onPressed: () {
+                print('Two Player Selected');
+                data.isMultiplayer = true;
+                // homeCallBack(HomeScreen.icon);
+                menuCallBack(MenuScreen.playerNames);
+              },
+            )
+          ],
         )
       ],
     ));
@@ -95,59 +103,67 @@ class _PlayerSetupState extends State<PlayerSetup> {
   final List<String> items = List<String>.generate(2, (i) => "Item $i");
 
   Widget build(BuildContext buildcontext) {
-    return (Container(
-      width: 400,
-      height: 400,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return (Column(
+      children: [
+        Text("Player Customization"),
+        SizedBox(
+          height: 100,
+        ),
+        Container(
+          width: 400,
+          height: 400,
+          child: Column(
             children: [
-              //TODO: change the class to be stateful and change symbol on listItem opnpress.
-              Text("Player 1 Icon: ${data.playerOneIcon}"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //TODO: change the class to be stateful and change symbol on listItem opnpress.
+                  Text("Player 1 Icon: ${data.playerOneIcon}"),
+                ],
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      // exmaple list view!!!
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  child: Text(stringList[index]),
+                                  onPressed: () {
+                                    data.playerOneIcon = stringList[index];
+                                    setState(() {});
+                                  }),
+                            ],
+                          ),
+                        );
+                      })),
+              SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                child: Text("Confirm"),
+                style: TextButton.styleFrom(
+                  minimumSize: Size(100, 50),
+                  primary: Colors.white,
+                  backgroundColor: Colors.teal,
+                  onSurface: Colors.grey,
+                ),
+                onPressed: () {
+                  print("player 1 confirmed");
+                  // menuCallBack(MenuScreen.playGame);
+                  homeCallBack(HomeScreen.play);
+                },
+              )
             ],
           ),
-          SizedBox(
-            height: 50,
-          ),
-          Expanded(
-              child: ListView.builder(
-                  // exmaple list view!!!
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                              child: Text(stringList[index]),
-                              onPressed: () {
-                                data.playerOneIcon = stringList[index];
-                                setState(() {});
-                              }),
-                        ],
-                      ),
-                    );
-                  })),
-          SizedBox(
-            height: 20,
-          ),
-          TextButton(
-            child: Text("Confirm"),
-            style: TextButton.styleFrom(
-              minimumSize: Size(100, 50),
-              primary: Colors.white,
-              backgroundColor: Colors.teal,
-              onSurface: Colors.grey,
-            ),
-            onPressed: () {
-              print("player 1 confirmed");
-              // menuCallBack(MenuScreen.playGame);
-              homeCallBack(HomeScreen.play);
-            },
-          )
-        ],
-      ),
+        )
+      ],
     ));
   }
 }
@@ -224,7 +240,6 @@ class _MenuState extends State<Menu> {
             color: Colors.amber,
             child: Column(
               children: [
-                Text('Choose your game type'),
                 SizedBox(
                   height: 150,
                 ),
