@@ -24,9 +24,7 @@ class PlayerSelectBar extends StatelessWidget {
     return (Column(
       children: [
         Text("Game Type"),
-        SizedBox(
-          height: 100,
-        ),
+        SizedBox(),
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: [
@@ -117,7 +115,6 @@ class _PlayerSetupState extends State<PlayerSetup> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //TODO: change the class to be stateful and change symbol on listItem opnpress.
                   Text("Player 1 Icon: ${data.playerOneIcon}"),
                 ],
               ),
@@ -127,6 +124,7 @@ class _PlayerSetupState extends State<PlayerSetup> {
               Expanded(
                   child: ListView.builder(
                       // exmaple list view!!!
+                      clipBehavior: Clip.hardEdge,
                       itemCount: items.length,
                       itemBuilder: (context, index) {
                         return ListTile(
@@ -143,9 +141,6 @@ class _PlayerSetupState extends State<PlayerSetup> {
                           ),
                         );
                       })),
-              SizedBox(
-                height: 20,
-              ),
               TextButton(
                 child: Text("Confirm"),
                 style: TextButton.styleFrom(
@@ -236,15 +231,8 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext buildContext) {
     return (Center(
         child: Container(
-            width: 500,
-            color: Colors.amber,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 150,
-                ),
-                showScreen(currentScreen),
-              ],
-            ))));
+      color: Colors.amber,
+      child: showScreen(currentScreen),
+    )));
   }
 }

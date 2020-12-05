@@ -36,10 +36,10 @@ class _MyAppState extends State<MyApp> {
                     data: gameData,
                   )
                 : AnimatedPositioned(
-                    top: currentScreen != HomeScreen.icon ? 200 : 100,
-                    left: 100,
-                    right: 100,
-                    height: currentScreen == HomeScreen.icon ? 600 : 400,
+                    top: currentScreen != HomeScreen.icon ? 100 : 100,
+                    left: 50,
+                    right: 50,
+                    bottom: currentScreen == HomeScreen.icon ? 100 : 200,
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInCubic,
                     child: Menu(
