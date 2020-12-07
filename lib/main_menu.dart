@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './data.dart';
 import './menu.dart';
 
+//Idea: what if rows/columns get added as the game progresses, on a random side??
+
 // Player Selects if the game will be single player or multiplayer
 class PlayerSelectBar extends StatelessWidget {
   final GameData data;
@@ -91,7 +93,7 @@ class PlayerSelectBar extends StatelessWidget {
                 backgroundColor: Colors.teal,
                 onSurface: Colors.grey,
               ),
-              child: Icon(Icons.lock_open),
+              child: Icon(Icons.settings),
               onPressed: () {
                 print('Settings Selected');
                 homeCallBack(HomeScreen.play);
