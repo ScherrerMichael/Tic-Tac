@@ -24,7 +24,6 @@ class PlayerSelectBar extends StatelessWidget {
     return (Column(
       children: [
         Text("Game Type"),
-        SizedBox(),
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: [
@@ -44,7 +43,7 @@ class PlayerSelectBar extends StatelessWidget {
               },
             ),
             SizedBox(
-              width: 50,
+              width: 25,
             ),
             TextButton(
               style: TextButton.styleFrom(
@@ -54,6 +53,48 @@ class PlayerSelectBar extends StatelessWidget {
                 onSurface: Colors.grey,
               ),
               child: Icon(Icons.people),
+              onPressed: () {
+                print('Two Player Selected');
+                data.isMultiplayer = true;
+                // homeCallBack(HomeScreen.icon);
+                menuCallBack(MenuScreen.playerNames);
+              },
+            )
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        ButtonBar(
+          // button bar 2
+          alignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              style: TextButton.styleFrom(
+                minimumSize: Size(100, 100),
+                primary: Colors.white,
+                backgroundColor: Colors.teal,
+                onSurface: Colors.grey,
+              ),
+              child: Icon(Icons.bluetooth),
+              onPressed: () {
+                print('One Player Selected');
+                data.isMultiplayer = false;
+                homeCallBack(HomeScreen.icon);
+                menuCallBack(MenuScreen.playerNames);
+              },
+            ),
+            SizedBox(
+              width: 25,
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                minimumSize: Size(100, 100),
+                primary: Colors.white,
+                backgroundColor: Colors.teal,
+                onSurface: Colors.grey,
+              ),
+              child: Icon(Icons.settings),
               onPressed: () {
                 print('Two Player Selected');
                 data.isMultiplayer = true;
@@ -105,7 +146,7 @@ class _PlayerSetupState extends State<PlayerSetup> {
       children: [
         Text("Player Customization"),
         SizedBox(
-          height: 100,
+          height: 50,
         ),
         Container(
           width: 400,
@@ -151,7 +192,6 @@ class _PlayerSetupState extends State<PlayerSetup> {
                 ),
                 onPressed: () {
                   print("player 1 confirmed");
-                  // menuCallBack(MenuScreen.playGame);
                   homeCallBack(HomeScreen.play);
                 },
               )
