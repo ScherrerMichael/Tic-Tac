@@ -32,8 +32,9 @@ class PlayerSelectBar extends StatelessWidget {
               onPressed: () {
                 print('One Player Selected');
                 data.isMultiplayer = false;
-                homeCallBack(HomeScreen.icon);
-                menuCallBack(MenuScreen.playerNames);
+                homeCallBack(HomeScreen.play);
+                // homeCallBack(HomeScreen.icon);
+                // menuCallBack(MenuScreen.playerNames);
               },
             ),
             SizedBox(
@@ -50,8 +51,9 @@ class PlayerSelectBar extends StatelessWidget {
               onPressed: () {
                 print('Two Player Selected');
                 data.isMultiplayer = true;
+                homeCallBack(HomeScreen.play);
                 // homeCallBack(HomeScreen.icon);
-                menuCallBack(MenuScreen.playerNames);
+                // menuCallBack(MenuScreen.playerNames);
               },
             )
           ],
@@ -72,10 +74,11 @@ class PlayerSelectBar extends StatelessWidget {
               ),
               child: Icon(Icons.bluetooth),
               onPressed: () {
-                print('One Player Selected');
-                data.isMultiplayer = false;
-                homeCallBack(HomeScreen.icon);
-                menuCallBack(MenuScreen.playerNames);
+                print('Bluetooth Selected');
+                data.isMultiplayer = true;
+                homeCallBack(HomeScreen.play);
+                // homeCallBack(HomeScreen.icon);
+                // menuCallBack(MenuScreen.playerNames);
               },
             ),
             SizedBox(
@@ -88,12 +91,12 @@ class PlayerSelectBar extends StatelessWidget {
                 backgroundColor: Colors.teal,
                 onSurface: Colors.grey,
               ),
-              child: Icon(Icons.settings),
+              child: Icon(Icons.lock_open),
               onPressed: () {
-                print('Two Player Selected');
-                data.isMultiplayer = true;
+                print('Settings Selected');
+                homeCallBack(HomeScreen.play);
                 // homeCallBack(HomeScreen.icon);
-                menuCallBack(MenuScreen.playerNames);
+                // menuCallBack(MenuScreen.playerNames);
               },
             )
           ],

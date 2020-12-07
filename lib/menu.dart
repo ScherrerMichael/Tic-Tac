@@ -4,7 +4,7 @@ import './data.dart';
 import './main_menu.dart';
 import './player_setup_menu.dart';
 
-enum MenuScreen { playerSelect, playerNames, playGame }
+enum MenuScreen { playerSelect, playerNames, bluetooth, settings, playGame }
 enum HomeScreen { welcome, icon, play }
 
 typedef HomeCallBack = void Function(HomeScreen state);
