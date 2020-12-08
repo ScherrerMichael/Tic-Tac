@@ -15,19 +15,29 @@ typedef MenuCallBack = void Function(MenuScreen state);
 class Menu extends StatefulWidget {
   final HomeCallBack homeCallBack;
   final GameData data;
-  Menu({@required this.homeCallBack, @required this.data});
+  final MenuScreen currentScreen;
+  Menu(
+      {@required this.homeCallBack,
+      @required this.data,
+      @required this.currentScreen});
 
-  _MenuState createState() =>
-      _MenuState(homeCallBack: homeCallBack, data: this.data);
+  _MenuState createState() => _MenuState(
+      homeCallBack: homeCallBack,
+      data: this.data,
+      currentScreen: this.currentScreen);
 }
 
 class _MenuState extends State<Menu> {
   HomeCallBack homeCallBack;
   final GameData data;
-
-  _MenuState({@required this.homeCallBack, @required this.data});
-
   var currentScreen = MenuScreen.main;
+
+  _MenuState(
+      {@required this.homeCallBack,
+      @required this.data,
+      @required this.currentScreen});
+
+  // var currentScreen = MenuScreen.main;
 
   void changeMenuScreen(MenuScreen screen) {
     currentScreen = screen;
@@ -63,13 +73,20 @@ class _MenuState extends State<Menu> {
 
       case MenuScreen.winScreen:
         {
-          Text('win screen..');
+          return WinScreen(
+              data: this.data,
+              homeCallBack: homeCallBack,
+              menuCallBack: (MenuScreen screen) {
+                setState(() {
+                  changeMenuScreen(screen);
+                });
+              });
         }
         break;
 
       default:
         {
-          return (Text("oops!"));
+          return (Text('current screen: $currentScreen'));
         }
         break;
     }

@@ -18,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var currentScreen = HomeScreen.welcome;
+  var currentMenuScreen = MenuScreen.main;
 
   Widget build(BuildContext context) {
     GameData gameData = new GameData(false);
@@ -33,6 +34,12 @@ class _MyAppState extends State<MyApp> {
           child: Stack(children: [
             currentScreen == HomeScreen.play
                 ? Grid(
+                    menuCallBack: (MenuScreen screen) {
+                      setState(() {
+                        this.currentMenuScreen = screen;
+                        this.currentScreen = HomeScreen.welcome;
+                      });
+                    },
                     data: gameData,
                   )
                 : AnimatedPositioned(
@@ -43,6 +50,7 @@ class _MyAppState extends State<MyApp> {
                     duration: Duration(milliseconds: 1000),
                     curve: Curves.easeInCubic,
                     child: Menu(
+                      currentScreen: this.currentMenuScreen,
                       data: gameData,
                       homeCallBack: (HomeScreen screen) {
                         setState(() {

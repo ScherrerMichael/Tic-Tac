@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import './data.dart';
+import './menu.dart';
 
 // class for each clickable box to be used in the game's grid.
 typedef BoxCallBack = void Function(int row, int col);
@@ -88,16 +89,18 @@ class _BoxWidgetState extends State<BoxW> {
 
 class Grid extends StatefulWidget {
   final GameData data;
+  final MenuCallBack menuCallBack;
 
-  Grid({@required this.data});
+  Grid({@required this.data, @required this.menuCallBack});
 
   _GridState createState() => _GridState(data: this.data);
 }
 
 class _GridState extends State<Grid> {
   final GameData data;
+  MenuCallBack menuCallBack;
 
-  _GridState({@required this.data});
+  _GridState({@required this.data, @required this.menuCallBack});
 
   bool isButtonDisabled = true;
   int selectedRow;
