@@ -1,5 +1,5 @@
-
-
+import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import './data.dart';
 
@@ -102,6 +102,11 @@ class _GridState extends State<Grid> {
   bool isButtonDisabled = true;
   int selectedRow;
   int selectedCol;
+
+  Future sleep1() {
+    return new Future.delayed(
+        const Duration(seconds: 5), () => {print('sleeping')});
+  }
 
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -287,6 +292,7 @@ class _GridState extends State<Grid> {
               onPressed: () {
                 setState(() {
                   isButtonDisabled = true;
+                  sleep1();
                   data.setGrid(selectedRow, selectedCol, data.currentPlayerTurn,
                       data.currentPlayerTurn);
                 });
