@@ -93,12 +93,13 @@ class Grid extends StatefulWidget {
 
   Grid({@required this.data, @required this.menuCallBack});
 
-  _GridState createState() => _GridState(data: this.data);
+  _GridState createState() =>
+      _GridState(data: this.data, menuCallBack: this.menuCallBack);
 }
 
 class _GridState extends State<Grid> {
   final GameData data;
-  MenuCallBack menuCallBack;
+  final MenuCallBack menuCallBack;
 
   _GridState({@required this.data, @required this.menuCallBack});
 
@@ -302,6 +303,7 @@ class _GridState extends State<Grid> {
 
                   if (data.checkWin(selectedRow, selectedCol,
                       data.currentPlayerTurn, data.currentPlayerTurn)) {
+                    menuCallBack(MenuScreen.main);
                     isWinner = true;
                   }
                   print(
