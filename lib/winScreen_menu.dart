@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import './data.dart';
 import './menu.dart';
@@ -16,8 +15,6 @@ class WinScreen extends StatelessWidget {
   final MenuCallBack menuCallBack;
 
   Widget build(BuildContext buildcontext) {
-    return (
-        Text('${data.currentPlayerTurn} wins!');
-    );
+    return (Text('${data.currentPlayerTurn} wins!'));
   }
 }
