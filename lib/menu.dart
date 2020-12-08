@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import './data.dart';
 import './main_menu.dart';
 import './player_setup_menu.dart';
+import './winScreen_menu.dart';
 
-enum MenuScreen { playerSelect, playerNames, bluetooth, settings, playGame }
+enum MenuScreen { main, playerSetup, bluetooth, winScreen, settings }
 enum HomeScreen { welcome, icon, play }
 
 typedef HomeCallBack = void Function(HomeScreen state);
@@ -26,7 +27,7 @@ class _MenuState extends State<Menu> {
 
   _MenuState({@required this.homeCallBack, @required this.data});
 
-  var currentScreen = MenuScreen.playerSelect;
+  var currentScreen = MenuScreen.main;
 
   void changeMenuScreen(MenuScreen screen) {
     currentScreen = screen;
@@ -34,7 +35,7 @@ class _MenuState extends State<Menu> {
 
   Widget showScreen(MenuScreen screen) {
     switch (screen) {
-      case MenuScreen.playerSelect:
+      case MenuScreen.main:
         {
           return PlayerSelectBar(
               data: this.data,
@@ -47,7 +48,7 @@ class _MenuState extends State<Menu> {
         }
         break;
 
-      case MenuScreen.playerNames:
+      case MenuScreen.playerSetup:
         {
           return PlayerSetup(
               data: this.data,
@@ -60,9 +61,9 @@ class _MenuState extends State<Menu> {
         }
         break;
 
-      case MenuScreen.playGame:
+      case MenuScreen.winScreen:
         {
-          return Text("playing the game");
+          Text('win screen..');
         }
         break;
 

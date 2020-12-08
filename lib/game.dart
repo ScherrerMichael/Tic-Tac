@@ -312,6 +312,5 @@ class _GridState extends State<Grid> {
                     },
                   )
           ])
-        : Text('win!');
   }
 }
