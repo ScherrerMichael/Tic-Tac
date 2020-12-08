@@ -85,23 +85,24 @@ class _BoxWidgetState extends State<BoxW> {
   }
 }
 
+typedef OnPlayerWin = void Function(GameData data);
 // the grid houses 9 boxes for the game.
 
 class Grid extends StatefulWidget {
   final GameData data;
-  final MenuCallBack menuCallBack;
+  final OnPlayerWin onPlayerWin;
 
-  Grid({@required this.data, @required this.menuCallBack});
+  Grid({@required this.data, @required this.onPlayerWin});
 
   _GridState createState() =>
-      _GridState(data: this.data, menuCallBack: this.menuCallBack);
+      _GridState(data: this.data, onPlayerWin: this.onPlayerWin);
 }
 
 class _GridState extends State<Grid> {
   final GameData data;
-  final MenuCallBack menuCallBack;
+  final OnPlayerWin onPlayerWin;
 
-  _GridState({@required this.data, @required this.menuCallBack});
+  _GridState({@required this.data, @required this.onPlayerWin});
 
   bool isButtonDisabled = true;
   int selectedRow;
@@ -303,15 +304,15 @@ class _GridState extends State<Grid> {
 
                   if (data.checkWin(selectedRow, selectedCol,
                       data.currentPlayerTurn, data.currentPlayerTurn)) {
-                    menuCallBack(MenuScreen.main);
-                    isWinner = true;
-                  }
-                  print(
-                      'row: $selectedRow, col: $selectedCol, player: ${data.currentPlayerTurn}');
-                  print(
-                      'check win: ${data.checkWin(selectedRow, selectedCol, data.currentPlayerTurn, data.currentPlayerTurn)}');
+                    onPlayerWin(this.data);
+                  } else {
+                    print(
+                        'row: $selectedRow, col: $selectedCol, player: ${data.currentPlayerTurn}');
+                    print(
+                        'check win: ${data.checkWin(selectedRow, selectedCol, data.currentPlayerTurn, data.currentPlayerTurn)}');
 
-                  data.nextTurn();
+                    data.nextTurn();
+                  }
                 });
               },
             )

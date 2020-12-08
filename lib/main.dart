@@ -20,9 +20,8 @@ class _MyAppState extends State<MyApp> {
   var currentScreen = HomeScreen.welcome;
   var currentMenuScreen = MenuScreen.main;
 
+  GameData gameData = new GameData(false);
   Widget build(BuildContext context) {
-    GameData gameData = new GameData(false);
-
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
@@ -34,10 +33,11 @@ class _MyAppState extends State<MyApp> {
           child: Stack(children: [
             currentScreen == HomeScreen.play
                 ? Grid(
-                    menuCallBack: (MenuScreen screen) {
+                    onPlayerWin: (GameData data) {
                       setState(() {
-                        this.currentMenuScreen = screen;
+                        this.currentMenuScreen = MenuScreen.winScreen;
                         this.currentScreen = HomeScreen.welcome;
+                        // gameData = data;
                       });
                     },
                     data: gameData,
@@ -50,8 +50,8 @@ class _MyAppState extends State<MyApp> {
                     duration: Duration(milliseconds: 1000),
                     curve: Curves.easeInCubic,
                     child: Menu(
-                      currentScreen: this.currentMenuScreen,
                       data: gameData,
+                      currentScreen: this.currentMenuScreen,
                       homeCallBack: (HomeScreen screen) {
                         setState(() {
                           print("current screen = $screen");

@@ -15,6 +15,8 @@ class WinScreen extends StatelessWidget {
   final MenuCallBack menuCallBack;
 
   Widget build(BuildContext buildcontext) {
-    return (Text('${data.currentPlayerTurn} wins!'));
+    data.printGrid();
+    return (Text(
+        'player ${data.currentPlayerTurn} wins! \n Player 1 score: ${data.playerOneScore} \n Player 2 score: ${data.playerTwoScore} '));
   }
 }

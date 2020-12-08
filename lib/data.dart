@@ -15,11 +15,11 @@ class GameData {
   int _currentPlayerTurn = 1;
 
   String _playerOneName;
-  int _playerOneScore;
+  int _playerOneScore = 0;
   String _playerOneIcon;
 
   String _playerTwoName;
-  int _playerTwoScore;
+  int _playerTwoScore = 0;
   String _playerTwoIcon;
 
   List<List<int>> grid;
@@ -56,8 +56,20 @@ class GameData {
     return grid[row][col];
   }
 
+  void printGrid() {
+    print('$grid');
+  }
+
   get playerOneIcon {
     return this._playerOneIcon;
+  }
+
+  get playerOneScore {
+    return this._playerOneScore;
+  }
+
+  get playerTwoScore {
+    return this._playerTwoScore;
   }
 
   set playerOneIcon(String icon) {
@@ -81,9 +93,13 @@ class GameData {
   }
 
   void makeWinner(int player) {
-    if (player == 1)
+    if (player == 1) {
       print("Player $playerOneName has won!");
-    else if (player == 2) print("Player $playerTwoName has won!");
+      ++this._playerOneScore;
+    } else if (player == 2) {
+      print("Player $playerTwoName has won!");
+      ++this._playerTwoScore;
+    }
   }
 
   bool isFull() {
@@ -180,7 +196,6 @@ class GameData {
 
   void setGrid(int row, int col, int symbol, int player) {
     grid[row][col] = symbol;
-    checkWin(row, col, symbol, player);
   }
 
   void nextTurn() {
