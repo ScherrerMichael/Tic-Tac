@@ -66,7 +66,8 @@ class _BoxWidgetState extends State<BoxW> {
         _color = data.playerOneColor;
       else if (value == 2) _color = data.playerTwoColor;
     });
-    return TextButton(
+    return FlatButton(
+        padding: EdgeInsets.zero,
         onPressed: () {
           setState(() {
             if (data.isActive(row, col)) {
@@ -136,7 +137,7 @@ class _GridState extends State<Grid> {
         ],
       ),
       SizedBox(
-        height: 100,
+        height: 50,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -216,6 +217,7 @@ class _GridState extends State<Grid> {
             border: Border(
               left: BorderSide(color: Colors.black),
               right: BorderSide(color: Colors.black),
+              bottom: BorderSide(color: Colors.black),
             ),
             boxCallBack: (int row, int col) {
               setState(() {
@@ -267,7 +269,7 @@ class _GridState extends State<Grid> {
             border: Border(
               left: BorderSide(color: Colors.black),
               right: BorderSide(color: Colors.black),
-              top: BorderSide(color: Colors.black),
+              // top: BorderSide(color: Colors.black),
             ),
             boxCallBack: (int row, int col) {
               setState(() {
@@ -294,7 +296,7 @@ class _GridState extends State<Grid> {
         ],
       ),
       SizedBox(
-        height: 100,
+        height: 50,
       ),
       isButtonDisabled
           ? TextButton(
