@@ -20,7 +20,11 @@ class WinScreen extends StatelessWidget {
       child: Column(
         children: [
           Text(
-              'player ${data.currentPlayerTurn} wins! \n Player 1 score: ${data.playerOneScore} \n Player 2 score: ${data.playerTwoScore} '),
+            'player ${data.currentPlayerTurn} wins! \nPlayer 1 score: ${data.playerOneScore} \nPlayer 2 score: ${data.playerTwoScore} ',
+            style: DefaultTextStyle.of(buildcontext)
+                .style
+                .apply(fontSizeFactor: 2.0),
+          ),
           SizedBox(
             height: 100,
           ),

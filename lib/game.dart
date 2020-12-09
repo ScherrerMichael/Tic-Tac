@@ -118,13 +118,17 @@ class _GridState extends State<Grid> {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("player ${data.currentPlayerTurn}'s turn"),
+          Text(
+            "player ${data.currentPlayerTurn}'s turn",
+            style:
+                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+          ),
           SizedBox(
             width: 25,
           ),
           Container(
-            width: 20,
-            height: 20,
+            width: 50,
+            height: 50,
             color: data.currentColor,
           )
         ],

@@ -22,7 +22,12 @@ class PlayerSelectBar extends StatelessWidget {
         SizedBox(
           height: 50,
         ),
-        Text("Game Type"),
+        Text(
+          "Game Type",
+          style: DefaultTextStyle.of(buildcontext)
+              .style
+              .apply(fontSizeFactor: 2.0),
+        ),
         SizedBox(
           height: 50,
         ),
