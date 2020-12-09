@@ -109,6 +109,10 @@ class GameData {
     return true;
   }
 
+  void clear() {
+    for (int i = 0; i < rows; ++i) for (int j = 0; j < col; ++j) grid[i][j] = 0;
+  }
+
   bool checkWin(int row, int col, int symbol, int player) {
     //verify:
 

@@ -305,6 +305,7 @@ class _GridState extends State<Grid> {
                   if (data.checkWin(selectedRow, selectedCol,
                       data.currentPlayerTurn, data.currentPlayerTurn)) {
                     onPlayerWin(this.data);
+                    return;
                   } else {
                     print(
                         'row: $selectedRow, col: $selectedCol, player: ${data.currentPlayerTurn}');
