@@ -19,12 +19,19 @@ class WinScreen extends StatelessWidget {
     return (Container(
       child: Column(
         children: [
-          Text(
-            'player ${data.currentPlayerTurn} wins! \nPlayer 1 score: ${data.playerOneScore} \nPlayer 2 score: ${data.playerTwoScore} ',
-            style: DefaultTextStyle.of(buildcontext)
-                .style
-                .apply(fontSizeFactor: 2.0),
-          ),
+          data.currentWinner != 0
+              ? Text(
+                  'player ${data.currentPlayerTurn} wins! \nPlayer 1 score: ${data.playerOneScore} \nPlayer 2 score: ${data.playerTwoScore} ',
+                  style: DefaultTextStyle.of(buildcontext)
+                      .style
+                      .apply(fontSizeFactor: 2.0),
+                )
+              : Text(
+                  'Cats Game, no winner! \nPlayer 1 score: ${data.playerOneScore} \nPlayer 2 score: ${data.playerTwoScore} ',
+                  style: DefaultTextStyle.of(buildcontext)
+                      .style
+                      .apply(fontSizeFactor: 2.0),
+                ),
           SizedBox(
             height: 100,
           ),

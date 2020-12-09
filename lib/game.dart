@@ -113,7 +113,7 @@ class _GridState extends State<Grid> {
 
   Future sleep1() {
     return new Future.delayed(
-        const Duration(seconds: 5), () => {print('sleeping')});
+        const Duration(seconds: 2), () => {data.nextTurn(), setState(() {})});
   }
 
   Widget build(BuildContext context) {
@@ -325,17 +325,24 @@ class _GridState extends State<Grid> {
                   data.setGrid(selectedRow, selectedCol, data.currentPlayerTurn,
                       data.currentPlayerTurn);
                   //TODO: two player scores, and current turn should reset when 'main menu' selected.
-                  if (data.checkWin(selectedRow, selectedCol,
-                      data.currentPlayerTurn, data.currentPlayerTurn)) {
-                    onPlayerWin(this.data);
-                    return;
-                  } else {
-                    print(
-                        'row: $selectedRow, col: $selectedCol, player: ${data.currentPlayerTurn}');
-                    print(
-                        'check win: ${data.checkWin(selectedRow, selectedCol, data.currentPlayerTurn, data.currentPlayerTurn)}');
 
-                    data.nextTurn();
+                  if (data.isMultiplayer) {
+                    if (data.checkWin(selectedRow, selectedCol,
+                        data.currentPlayerTurn, data.currentPlayerTurn))
+                      onPlayerWin(data);
+                    else
+                      data.nextTurn();
+                  } else {
+                    if (data.checkWin(selectedRow, selectedCol, 1, 1))
+                      onPlayerWin(data);
+                    else {
+                      data.nextTurn();
+                      if (data.doCpuTurn()) {
+                        onPlayerWin(data);
+                      } else
+                        // data.nextTurn();
+                        sleep1();
+                    }
                   }
                 });
               },

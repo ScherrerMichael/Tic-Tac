@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class GameData {
@@ -11,7 +13,7 @@ class GameData {
   // second player / ai = 2
 
   Color _currentColor;
-
+  int _currentWinner = 0;
   int _currentPlayerTurn = 1;
 
   String _playerOneName;
@@ -37,6 +39,10 @@ class GameData {
     print(grid);
     print(
         "initial game data created, \n player one name: $_playerOneName \n player two name: $_playerTwoName");
+  }
+
+  get currentWinner {
+    return this._currentWinner;
   }
 
   String get playerOneName {
@@ -119,6 +125,8 @@ class GameData {
       print("Player $playerTwoName has won!");
       ++this._playerTwoScore;
     }
+
+    this._currentWinner = player;
   }
 
   bool isFull() {
@@ -203,6 +211,7 @@ class GameData {
     //cats game (no winner)
     if (isFull()) {
       print("cats game, no winner!");
+      makeWinner(0);
       return true;
     }
 
@@ -230,5 +239,22 @@ class GameData {
       _currentColor = _playerOneColor;
 
     print("current player turn = $_currentPlayerTurn");
+  }
+
+  bool doCpuTurn() {
+    var rng = new Random();
+    int randomRow = rng.nextInt(3);
+    int randomCol = rng.nextInt(3);
+
+    print('cpu picking row: $randomRow, $randomCol');
+
+    if (!isFull() && isActive(randomRow, randomCol)) {
+      grid[randomRow][randomCol] = 2;
+    } else
+      return doCpuTurn();
+
+    // nextTurn();
+
+    return checkWin(randomRow, randomCol, 2, 2);
   }
 }
