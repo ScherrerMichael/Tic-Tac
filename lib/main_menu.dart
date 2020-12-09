@@ -3,7 +3,7 @@ import './data.dart';
 import './menu.dart';
 
 //Idea: what if rows/columns get added as the game progresses, on a random side??
-
+// TODO: refactor 'player edit screen' and add it!
 // Player Selects if the game will be single player or multiplayer
 class PlayerSelectBar extends StatelessWidget {
   final GameData data;

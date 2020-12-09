@@ -322,7 +322,7 @@ class _GridState extends State<Grid> {
                   // sleep1();
                   data.setGrid(selectedRow, selectedCol, data.currentPlayerTurn,
                       data.currentPlayerTurn);
-
+                  //TODO: two player scores, and current turn should reset when 'main menu' selected.
                   if (data.checkWin(selectedRow, selectedCol,
                       data.currentPlayerTurn, data.currentPlayerTurn)) {
                     onPlayerWin(this.data);
