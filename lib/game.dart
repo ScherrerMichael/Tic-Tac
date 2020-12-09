@@ -69,9 +69,11 @@ class _BoxWidgetState extends State<BoxW> {
     return TextButton(
         onPressed: () {
           setState(() {
-            if (data.isActive(row, col)) _color = data.currentColor;
+            if (data.isActive(row, col)) {
+              _color = data.currentColor;
+              boxCallBack(this.row, this.col);
+            }
           });
-          boxCallBack(this.row, this.col);
         },
         child: Container(
           width: 100,
