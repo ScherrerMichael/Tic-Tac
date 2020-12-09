@@ -115,7 +115,23 @@ class _GridState extends State<Grid> {
 
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text("player turn: ${data.currentPlayerTurn}"),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("player ${data.currentPlayerTurn}'s turn"),
+          SizedBox(
+            width: 25,
+          ),
+          Container(
+            width: 20,
+            height: 20,
+            color: data.currentColor,
+          )
+        ],
+      ),
+      SizedBox(
+        height: 100,
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

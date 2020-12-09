@@ -10,15 +10,17 @@ class GameData {
   // first player = 1
   // second player / ai = 2
 
-  Color _currentColor = Colors.blue;
+  Color _currentColor;
 
   int _currentPlayerTurn = 1;
 
   String _playerOneName;
+  Color _playerOneColor = Colors.blue;
   int _playerOneScore = 0;
   String _playerOneIcon;
 
   String _playerTwoName;
+  Color _playerTwoColor = Colors.red;
   int _playerTwoScore = 0;
   String _playerTwoIcon;
 
@@ -30,6 +32,7 @@ class GameData {
     this._isMultiplayer = isMultiplayer;
     this._playerOneName = playerOneName;
     this._playerTwoName = playerTwoName;
+    this._currentColor = _playerOneColor;
     grid = List<List<int>>.generate(3, (i) => List<int>.generate(3, (j) => 0));
     print(grid);
     print(
@@ -70,6 +73,14 @@ class GameData {
 
   get playerTwoScore {
     return this._playerTwoScore;
+  }
+
+  set playerOneColor(Color color) {
+    this._playerOneColor = color;
+  }
+
+  set playerTwoColor(Color color) {
+    this._playerTwoColor = color;
   }
 
   set playerOneIcon(String icon) {
@@ -205,10 +216,10 @@ class GameData {
   void nextTurn() {
     _currentPlayerTurn == 1 ? _currentPlayerTurn = 2 : _currentPlayerTurn = 1;
 
-    if (_currentColor == Colors.blue)
-      _currentColor = Colors.red;
+    if (_currentColor == _playerOneColor)
+      _currentColor = _playerTwoColor;
     else
-      _currentColor = Colors.blue;
+      _currentColor = _playerOneColor;
 
     print("current player turn = $_currentPlayerTurn");
   }
