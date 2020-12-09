@@ -12,6 +12,8 @@ void main() => runApp(MyApp());
 
 // this main app widget keeps track of the child widget, Grid.
 
+//maybe use this color pallet?: https://coolors.co/157a6e-499f68-77b28c-c2c5bb-b4654a
+
 class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
@@ -23,8 +25,11 @@ class _MyAppState extends State<MyApp> {
   GameData gameData = new GameData(false);
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          primaryColor: Color(0xFF157A6E), brightness: Brightness.light),
       title: 'Welcome to Flutter',
       home: Scaffold(
+        backgroundColor: Color(0xFFC2C5bb),
         appBar: AppBar(
           title: Text("Tick Tack Toe"),
         ),

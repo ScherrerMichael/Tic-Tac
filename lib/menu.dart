@@ -96,7 +96,19 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext buildContext) {
     return (Center(
         child: Container(
-      color: Colors.amber,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.black),
+        color: Color(0xFF77b28c),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: showScreen(currentScreen),
     )));
   }

@@ -75,12 +75,20 @@ class GameData {
     return this._playerTwoScore;
   }
 
+  get playerOneColor {
+    return this._playerOneColor;
+  }
+
   set playerOneColor(Color color) {
     this._playerOneColor = color;
   }
 
   set playerTwoColor(Color color) {
     this._playerTwoColor = color;
+  }
+
+  get playerTwoColor {
+    return this._playerTwoColor;
   }
 
   set playerOneIcon(String icon) {

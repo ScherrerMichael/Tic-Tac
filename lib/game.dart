@@ -63,8 +63,8 @@ class _BoxWidgetState extends State<BoxW> {
           (parent.selectedRow != this.row || parent.selectedCol != this.col))
         _color = Colors.white;
       else if (value == 1)
-        _color = Colors.blue;
-      else if (value == 2) _color = Colors.red;
+        _color = data.playerOneColor;
+      else if (value == 2) _color = data.playerTwoColor;
     });
     return TextButton(
         onPressed: () {

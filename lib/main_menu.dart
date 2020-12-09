@@ -19,7 +19,13 @@ class PlayerSelectBar extends StatelessWidget {
   Widget build(BuildContext buildcontext) {
     return (Column(
       children: [
+        SizedBox(
+          height: 50,
+        ),
         Text("Game Type"),
+        SizedBox(
+          height: 50,
+        ),
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: [
@@ -74,9 +80,9 @@ class PlayerSelectBar extends StatelessWidget {
                 backgroundColor: Colors.teal,
                 onSurface: Colors.grey,
               ),
-              child: Icon(Icons.bluetooth),
+              child: Icon(Icons.star),
               onPressed: () {
-                print('Bluetooth Selected');
+                print('customization selected');
                 data.isMultiplayer = true;
                 homeCallBack(HomeScreen.play);
                 // homeCallBack(HomeScreen.icon);
