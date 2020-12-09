@@ -1,26 +1,112 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import './data.dart';
-import './grid_box.dart';
+import './menu.dart';
 
+// class for each clickable box to be used in the game's grid.
+typedef BoxCallBack = void Function(int row, int col);
+
+class BoxW extends StatefulWidget {
+  final Border border;
+  final GameData data;
+  final int col;
+  final int row;
+  final BoxCallBack boxCallBack;
+  final _GridState parent;
+
+  BoxW({
+    this.border,
+    @required this.row,
+    @required this.col,
+    @required this.data,
+    @required this.boxCallBack,
+    @required this.parent,
+  });
+
+  @override
+  _BoxWidgetState createState() => _BoxWidgetState(
+        border: this.border,
+        row: this.row,
+        col: this.col,
+        data: this.data,
+        boxCallBack: this.boxCallBack,
+        parent: this.parent,
+      );
+}
+
+class _BoxWidgetState extends State<BoxW> {
+  Border border;
+
+  GameData data;
+  int row;
+  int col;
+  final BoxCallBack boxCallBack;
+  _GridState parent;
+
+  _BoxWidgetState({
+    this.border,
+    @required this.data,
+    @required this.row,
+    @required this.col,
+    @required this.boxCallBack,
+    @required this.parent,
+  });
+
+  var _color = Colors.white;
+  bool _selected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    int value = data.gridAt(row, col);
+    setState(() {
+      if (value == 0 &&
+          (parent.selectedRow != this.row || parent.selectedCol != this.col))
+        _color = Colors.white;
+      else if (value == 1)
+        _color = Colors.blue;
+      else if (value == 2) _color = Colors.red;
+    });
+    return TextButton(
+        onPressed: () {
+          setState(() {
+            if (data.isActive(row, col)) _color = data.currentColor;
+          });
+          boxCallBack(this.row, this.col);
+        },
+        child: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            border: this.border,
+            color: _color,
+          ),
+        ));
+  }
+}
+
+typedef OnPlayerWin = void Function(GameData data);
 // the grid houses 9 boxes for the game.
 
 class Grid extends StatefulWidget {
   final GameData data;
+  final OnPlayerWin onPlayerWin;
 
-  Grid({@required this.data});
+  Grid({@required this.data, @required this.onPlayerWin});
 
-  _GridState createState() => _GridState(data: this.data);
+  _GridState createState() =>
+      _GridState(data: this.data, onPlayerWin: this.onPlayerWin);
 }
 
 class _GridState extends State<Grid> {
   final GameData data;
+  final OnPlayerWin onPlayerWin;
 
-  _GridState({@required this.data});
+  _GridState({@required this.data, @required this.onPlayerWin});
 
   bool isButtonDisabled = true;
   int selectedRow;
   int selectedCol;
+  bool isWinner = false;
 
   Future sleep1() {
     return new Future.delayed(
@@ -211,9 +297,22 @@ class _GridState extends State<Grid> {
               onPressed: () {
                 setState(() {
                   isButtonDisabled = true;
-                  sleep1();
+                  // sleep1();
                   data.setGrid(selectedRow, selectedCol, data.currentPlayerTurn,
                       data.currentPlayerTurn);
+
+                  if (data.checkWin(selectedRow, selectedCol,
+                      data.currentPlayerTurn, data.currentPlayerTurn)) {
+                    onPlayerWin(this.data);
+                    return;
+                  } else {
+                    print(
+                        'row: $selectedRow, col: $selectedCol, player: ${data.currentPlayerTurn}');
+                    print(
+                        'check win: ${data.checkWin(selectedRow, selectedCol, data.currentPlayerTurn, data.currentPlayerTurn)}');
+
+                    data.nextTurn();
+                  }
                 });
               },
             )

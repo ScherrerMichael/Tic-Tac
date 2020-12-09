@@ -15,11 +15,11 @@ class GameData {
   int _currentPlayerTurn = 1;
 
   String _playerOneName;
-  int _playerOneScore;
+  int _playerOneScore = 0;
   String _playerOneIcon;
 
   String _playerTwoName;
-  int _playerTwoScore;
+  int _playerTwoScore = 0;
   String _playerTwoIcon;
 
   List<List<int>> grid;
@@ -56,8 +56,20 @@ class GameData {
     return grid[row][col];
   }
 
+  void printGrid() {
+    print('$grid');
+  }
+
   get playerOneIcon {
     return this._playerOneIcon;
+  }
+
+  get playerOneScore {
+    return this._playerOneScore;
+  }
+
+  get playerTwoScore {
+    return this._playerTwoScore;
   }
 
   set playerOneIcon(String icon) {
@@ -81,9 +93,13 @@ class GameData {
   }
 
   void makeWinner(int player) {
-    if (player == 1)
+    if (player == 1) {
       print("Player $playerOneName has won!");
-    else if (player == 2) print("Player $playerTwoName has won!");
+      ++this._playerOneScore;
+    } else if (player == 2) {
+      print("Player $playerTwoName has won!");
+      ++this._playerTwoScore;
+    }
   }
 
   bool isFull() {
@@ -91,6 +107,10 @@ class GameData {
       for (int j = 0; j < col; ++j) if (grid[i][j] == 0) return false;
     }
     return true;
+  }
+
+  void clear() {
+    for (int i = 0; i < rows; ++i) for (int j = 0; j < col; ++j) grid[i][j] = 0;
   }
 
   bool checkWin(int row, int col, int symbol, int player) {
@@ -102,7 +122,7 @@ class GameData {
           (grid[1][1] == symbol) &&
           (grid[2][2] == symbol)) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
 
@@ -112,7 +132,7 @@ class GameData {
           grid[0][1] == symbol &&
           grid[0][2] == symbol) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
     // second row
@@ -121,7 +141,7 @@ class GameData {
           grid[1][1] == symbol &&
           grid[1][2] == symbol) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
     // third row
@@ -130,7 +150,7 @@ class GameData {
           grid[2][2] == symbol &&
           grid[2][2] == symbol) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
     // first column
@@ -139,7 +159,7 @@ class GameData {
           grid[1][0] == symbol &&
           grid[2][0] == symbol) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
     // second column
@@ -148,7 +168,7 @@ class GameData {
           grid[1][1] == symbol &&
           grid[2][1] == symbol) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
     // third column
@@ -157,17 +177,17 @@ class GameData {
           grid[1][2] == symbol &&
           grid[2][2] == symbol) {
         makeWinner(player);
-        return false;
+        return true;
       }
     }
 
     //cats game (no winner)
     if (isFull()) {
       print("cats game, no winner!");
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   get currentColor {
@@ -180,8 +200,9 @@ class GameData {
 
   void setGrid(int row, int col, int symbol, int player) {
     grid[row][col] = symbol;
-    checkWin(row, col, symbol, player);
+  }
 
+  void nextTurn() {
     _currentPlayerTurn == 1 ? _currentPlayerTurn = 2 : _currentPlayerTurn = 1;
 
     if (_currentColor == Colors.blue)
