@@ -136,8 +136,15 @@ class GameData {
     return true;
   }
 
-  void clear() {
+  void clearGrid() {
     for (int i = 0; i < rows; ++i) for (int j = 0; j < col; ++j) grid[i][j] = 0;
+  }
+
+  void reset() {
+    clearGrid();
+    this._playerOneScore = 0;
+    this._playerTwoScore = 0;
+    this._currentPlayerTurn = 1;
   }
 
   bool checkWin(int row, int col, int symbol, int player) {

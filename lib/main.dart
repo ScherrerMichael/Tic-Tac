@@ -59,6 +59,7 @@ class _MyAppState extends State<MyApp> {
                       currentScreen: this.currentMenuScreen,
                       homeCallBack: (HomeScreen screen) {
                         setState(() {
+                          gameData.reset();
                           print("current screen = $screen");
                           currentScreen = screen;
                         });

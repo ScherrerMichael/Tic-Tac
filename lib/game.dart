@@ -13,6 +13,7 @@ class BoxW extends StatefulWidget {
   final int row;
   final BoxCallBack boxCallBack;
   final _GridState parent;
+  final bool isSelectable;
 
   BoxW({
     this.border,
@@ -21,6 +22,7 @@ class BoxW extends StatefulWidget {
     @required this.data,
     @required this.boxCallBack,
     @required this.parent,
+    @required this.isSelectable,
   });
 
   @override
@@ -29,6 +31,7 @@ class BoxW extends StatefulWidget {
         row: this.row,
         col: this.col,
         data: this.data,
+        isSelectable: this.isSelectable,
         boxCallBack: this.boxCallBack,
         parent: this.parent,
       );
@@ -40,6 +43,7 @@ class _BoxWidgetState extends State<BoxW> {
   GameData data;
   int row;
   int col;
+  bool isSelectable;
   final BoxCallBack boxCallBack;
   _GridState parent;
 
@@ -50,10 +54,10 @@ class _BoxWidgetState extends State<BoxW> {
     @required this.col,
     @required this.boxCallBack,
     @required this.parent,
+    @required this.isSelectable,
   });
 
   var _color = Colors.white;
-  bool _selected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +74,7 @@ class _BoxWidgetState extends State<BoxW> {
         padding: EdgeInsets.zero,
         onPressed: () {
           setState(() {
-            if (data.isActive(row, col)) {
+            if (data.isActive(row, col) && parent.canSelect) {
               _color = data.currentColor;
               boxCallBack(this.row, this.col);
             }
@@ -110,10 +114,17 @@ class _GridState extends State<Grid> {
   int selectedRow;
   int selectedCol;
   bool isWinner = false;
+  bool canSelect = true;
 
   Future sleep1() {
     return new Future.delayed(
-        const Duration(seconds: 2), () => {data.nextTurn(), setState(() {})});
+        const Duration(seconds: 2),
+        () => {
+              setState(() {
+                data.nextTurn();
+                canSelect = true;
+              })
+            });
   }
 
   Widget build(BuildContext context) {
@@ -145,6 +156,7 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 0,
             col: 0,
+            isSelectable: canSelect,
             data: this.data,
             border: Border(bottom: BorderSide(color: Colors.black)),
             boxCallBack: (int row, int col) {
@@ -159,6 +171,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 0,
             col: 1,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             border: Border(
               left: BorderSide(color: Colors.black),
@@ -178,6 +192,8 @@ class _GridState extends State<Grid> {
             //top right
             row: 0,
             col: 2,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             border: Border(bottom: BorderSide(color: Colors.black)),
             boxCallBack: (int row, int col) {
@@ -197,6 +213,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 1,
             col: 0,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             border: Border(
               bottom: BorderSide(color: Colors.black),
@@ -213,6 +231,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 1,
             col: 1,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             border: Border(
               left: BorderSide(color: Colors.black),
@@ -231,6 +251,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 1,
             col: 2,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             border: Border(
               bottom: BorderSide(color: Colors.black),
@@ -252,6 +274,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 2,
             col: 0,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             boxCallBack: (int row, int col) {
               setState(() {
@@ -265,6 +289,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 2,
             col: 1,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             border: Border(
               left: BorderSide(color: Colors.black),
@@ -283,6 +309,8 @@ class _GridState extends State<Grid> {
           BoxW(
             row: 2,
             col: 2,
+            isSelectable:
+                data.isMultiplayer ? true : data.currentPlayerTurn == 1,
             data: this.data,
             boxCallBack: (int row, int col) {
               setState(() {
@@ -321,7 +349,6 @@ class _GridState extends State<Grid> {
               onPressed: () {
                 setState(() {
                   isButtonDisabled = true;
-                  // sleep1();
                   data.setGrid(selectedRow, selectedCol, data.currentPlayerTurn,
                       data.currentPlayerTurn);
                   //TODO: two player scores, and current turn should reset when 'main menu' selected.
@@ -333,9 +360,11 @@ class _GridState extends State<Grid> {
                     else
                       data.nextTurn();
                   } else {
+                    //is singleplayer
                     if (data.checkWin(selectedRow, selectedCol, 1, 1))
                       onPlayerWin(data);
                     else {
+                      canSelect = false;
                       data.nextTurn();
                       if (data.doCpuTurn()) {
                         onPlayerWin(data);

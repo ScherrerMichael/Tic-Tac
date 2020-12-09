@@ -40,7 +40,7 @@ class WinScreen extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  data.clear();
+                  data.clearGrid();
                   menuCallBack(MenuScreen.main);
                 },
                 child: Text("Menu"),
@@ -53,8 +53,7 @@ class WinScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // TODO reset the data
-                  data.clear();
+                  data.reset();
                   homeCallBack(HomeScreen.play);
                 },
                 child: Text("Play Again"),
